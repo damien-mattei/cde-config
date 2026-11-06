@@ -1,66 +1,74 @@
 # cde-config
 
-Configuration personnelle de **CDE** (Common Desktop Environment) sous Ubuntu : le
-contenu de `~/.dt` avec un Front Panel modernisé mais fidèle au style CDE.
+My personal **CDE** (Common Desktop Environment) setup on Ubuntu: the contents of
+`~/.dt`, with a Front Panel brought up to date while staying true to the CDE look.
 
 ![Front Panel](doc/front-panel.png)
 
-## Ce qu'il y a dedans
+## What's inside
 
 **Front Panel** (`types/*.fp`)
-- Applets « dockapps » intégrés au panneau (contrôles `TYPE client`) : `wmclock`
-  (un clic ouvre Google Agenda), `wmcpuload`, `wmmemload`, `wmbattery`, et `xeyes`.
-- Une zone de notification `stalonetray` 3×2 dans le panneau (réseau, Bluetooth,
-  presse-papiers, IBus, Psensor…).
-- Boutons Firefox, HP-15C, Emacs, Gmail (dans Firefox), imprimante HP ; la corbeille
-  CDE à l'extrême droite.
+- Dockapps embedded in the panel (`TYPE client` controls): `wmclock` (a click opens
+  Google Calendar), `wmcpuload`, `wmmemload`, `wmbattery`, and `xeyes`.
+- A 3×2 `stalonetray` system tray inside the panel (network, Bluetooth, clipboard
+  history, IBus, Psensor…).
+- Buttons for Firefox, the HP-15C simulator, Emacs, Gmail (in Firefox) and an HP
+  printer; the CDE trash at the far right.
 
-**Menus déroulants** (`types/fp_dynamic/*.fp`) : Nautilus, corbeille Nautilus,
-répertoire d'applications, `xfce4-appfinder`, calendrier CDE, Dropbox (dans un
-terminal qui affiche son état), réglages d'alimentation, mode présentation,
-connexions réseau, extinction de l'écran, capture d'écran, qps, Psensor, gkrellm…
+**Subpanels** (`types/fp_dynamic/*.fp`): Nautilus, Nautilus trash, an applications
+folder, `xfce4-appfinder`, the CDE calendar, Dropbox (in a terminal that shows its
+sync status), power settings, presentation mode, network connections, screen off,
+screenshot, qps, Psensor, gkrellm…
 
-**Clavier** (`dtwmrc`, copie de `sys.dtwmrc` + liaisons)
-- Volume, coupure du son et du micro → `volume.sh` (une seule bulle de notification,
-  maximum 120 %).
-- Luminosité → `brightness.sh` (logind `SetBrightness`, crans progressifs, jusqu'à
-  l'écran éteint).
-- Impr écran → `xfce4-screenshooter`.
+**Keyboard** (`dtwmrc`, a copy of `sys.dtwmrc` plus bindings)
+- Volume, mute and mic mute → `volume.sh` (a single notification bubble, capped
+  at 120 %).
+- Brightness → `brightness.sh` (logind `SetBrightness`, perceptual steps, down to
+  backlight off).
+- Print Screen → `xfce4-screenshooter`.
 
 **Scripts**
-- `sessions/sessionetc` : lancé par CDE à l'ouverture de session ; démarre les applets,
-  la zone de notification, `nm-applet`, `blueman-applet`, `xfce4-clipman`, Dropbox.
-- `panel-applets-watch.sh` : après un « Restart workspace manager », réaffiche
-  `wmcpuload`/`wmmemload` et relance `xeyes` (aussi après une sortie de veille).
-- `wmmemload-panel.sh`, `tray-panel.sh`, `xclock-toggle.sh`, `presentation-toggle.sh`,
-  `dropbox-*.sh`.
+- `sessions/sessionetc`: run by CDE at login; starts the dockapps, the tray,
+  `nm-applet`, `blueman-applet`, `xfce4-clipman` and Dropbox.
+- `panel-applets-watch.sh`: after "Restart Workspace Manager", maps
+  `wmcpuload`/`wmmemload` again and relaunches `xeyes` (also after resuming from
+  suspend).
+- `wmmemload-panel.sh`, `tray-panel.sh`, `xclock-toggle.sh`,
+  `presentation-toggle.sh`, `dropbox-*.sh`.
 
 ## Installation
 
-1. Copier les fichiers dans `~/.dt` (en gardant une copie de l'ancien).
-2. Remplacer `/home/mattei` par votre dossier personnel dans les fichiers qui le
-   contiennent : `grep -rl /home/mattei ~/.dt`.
-3. Clic droit sur le bureau → **Restart workspace manager**, puis fermer et rouvrir la
-   session pour que `sessionetc` s'exécute.
+1. Copy the files into `~/.dt` (back up your own first).
+2. Replace `/home/mattei` with your home directory in the files that contain it:
+   `grep -rl /home/mattei ~/.dt`.
+3. Right-click the desktop → **Restart Workspace Manager**, then log out and back in
+   so that `sessionetc` runs.
 
-Programmes utilisés (paquets Ubuntu) : `wmclock wmcpuload wmmemload wmbattery
-x11-apps stalonetray network-manager-gnome blueman xfce4-clipman
-xfce4-power-manager xfce4-screenshooter pavucontrol nautilus xdotool x11-utils
-libnotify-bin papirus-icon-theme`.
+Packages used (Ubuntu): `wmclock wmcpuload wmmemload wmbattery x11-apps
+stalonetray network-manager-gnome blueman xfce4-clipman xfce4-power-manager
+xfce4-screenshooter pavucontrol nautilus xdotool x11-utils libnotify-bin
+papirus-icon-theme`.
 
-## Astuces CDE apprises en route
+## CDE tips learned along the way
 
-- Plusieurs contrôles avec le même `POSITION_HINTS` sont rangés par **ordre
-  alphabétique inverse** de leur nom (d'où `ZFirefoxPanel`, `GCpuLoad`…).
-- Un contrôle `TYPE client` intègre une fenêtre X par la première chaîne de son
-  `WM_CLASS` (`CLIENT_NAME`) ; pas de sous-menu sur un tel contrôle.
-- **Pas d'apostrophe dans les commentaires de `dtwmrc`** : dtwm ignore alors
-  silencieusement les liaisons qui suivent.
-- dtwm ne peut réserver une touche que si aucun autre programme ne l'a déjà prise.
-- `xeyes` doit être lancé avec `+present`, sinon son fond reste noir dans le panneau.
+- Controls sharing the same `POSITION_HINTS` are ordered by **reverse alphabetical
+  order** of their names (hence `ZFirefoxPanel`, `GCpuLoad`…).
+- A `TYPE client` control embeds an X window matched by the first string of its
+  `WM_CLASS` (`CLIENT_NAME`); such a control can't have a subpanel.
+- **No apostrophes in `dtwmrc` comments**: dtwm then silently ignores the bindings
+  that follow.
+- dtwm can only grab a key that no other program has already grabbed.
+- `xeyes` must be started with `+present`, otherwise its background stays black in
+  the panel.
+- CDE only remembers the workspaces of old-style X clients (`dtcm`, `xload`,
+  `xeyes`…); modern apps all come back on the current workspace.
 
-## Crédits
+## Notes
 
-Les icônes ajoutées (`icons/*.pm`) sont pour la plupart converties depuis le thème
-[Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme) (GPL-3.0).
-Configuration réalisée avec l'aide de Claude (Anthropic).
+Comments in the scripts and commit messages are in French.
+
+## Credits
+
+Most of the added icons (`icons/*.pm`) are converted from the
+[Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme) icon theme
+(GPL-3.0). Built with the help of Claude (Anthropic).

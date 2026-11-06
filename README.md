@@ -7,6 +7,8 @@ My personal **CDE** (Common Desktop Environment) setup on Ubuntu: the contents o
 
 ![CDE desktop with the customized Front Panel](doc/desktop.png)
 
+![Style Manager, subpanel and desktop tools](doc/sun-cde.png)
+
 ## What's inside
 
 **Front Panel** (`types/*.fp`)

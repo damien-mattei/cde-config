@@ -13,7 +13,7 @@ My personal **CDE** (Common Desktop Environment) setup on Ubuntu: the contents o
 - A 3×2 `stalonetray` system tray inside the panel (network, Bluetooth, clipboard
   history, IBus, Psensor…).
 - Buttons for Firefox, the HP-15C simulator, Emacs, Gmail (in Firefox) and an HP
-  printer; the CDE trash at the far right.
+  printer; the Home Folder button opens Nautilus; the CDE trash at the far right.
 
 **Subpanels** (`types/fp_dynamic/*.fp`): Nautilus, Nautilus trash, an applications
 folder, `xfce4-appfinder`, the CDE calendar, Dropbox (in a terminal that shows its

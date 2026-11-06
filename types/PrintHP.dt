@@ -1,0 +1,21 @@
+ACTION PrintHP
+{
+     LABEL         Print on HP
+     ARG_COUNT     1
+     ARG_TYPE      *
+     TYPE          COMMAND
+     WINDOW_TYPE   NO_STDIO
+     EXEC_STRING   /usr/bin/lp -d HP_Color_Laser_MFP_178nw "%Arg_1%"
+     ICON          Fpprnt
+     DESCRIPTION   Prints the dropped file on the HP Color Laser MFP 178nw
+}
+
+ACTION PrinterManagerHP
+{
+     LABEL         Printers
+     TYPE          COMMAND
+     WINDOW_TYPE   NO_STDIO
+     EXEC_STRING   /usr/bin/system-config-printer
+     ICON          Fpprnt
+     DESCRIPTION   Opens the printer manager
+}

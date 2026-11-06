@@ -1,0 +1,11 @@
+CONTROL	CalendarCDE
+{
+   TYPE	icon
+   CONTAINER_TYPE	SUBPANEL
+   CONTAINER_NAME	Clock
+   POSITION_HINTS	last
+   ICON	FpCM
+   LABEL	Calendar
+   PUSH_ACTION	Dtcm
+   HELP_STRING	CDE Calendar
+}

@@ -1,0 +1,9 @@
+ACTION NetEditor
+{
+     LABEL         Network Connections
+     TYPE          COMMAND
+     EXEC_STRING   /usr/bin/nm-connection-editor
+     ICON          NetEditor
+     WINDOW_TYPE   NO_STDIO
+     DESCRIPTION   Editeur des connexions NetworkManager
+}

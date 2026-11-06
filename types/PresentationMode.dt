@@ -1,0 +1,9 @@
+ACTION PresentationMode
+{
+     LABEL         Presentation Mode
+     TYPE          COMMAND
+     EXEC_STRING   /home/mattei/.dt/presentation-toggle.sh
+     ICON          DtScrn
+     WINDOW_TYPE   NO_STDIO
+     DESCRIPTION   Active ou desactive le mode presentation (xfce4-power-manager)
+}

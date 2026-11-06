@@ -1,0 +1,9 @@
+ACTION Gkrellm
+{
+     LABEL         Gkrellm
+     TYPE          COMMAND
+     EXEC_STRING   /usr/bin/gkrellm
+     ICON          Dtload
+     WINDOW_TYPE   NO_STDIO
+     DESCRIPTION   Gkrellm system monitor (CPU, memory, swap)
+}

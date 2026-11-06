@@ -1,0 +1,10 @@
+ACTION HP15C
+{
+     LABEL         HP-15C
+     TYPE          COMMAND
+     CWD           /home/mattei/HP-15C
+     EXEC_STRING   /home/mattei/HP-15C/HP-15C
+     ICON          HP15C
+     WINDOW_TYPE   NO_STDIO
+     DESCRIPTION   HP-15C calculator simulator
+}

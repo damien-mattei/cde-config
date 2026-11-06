@@ -1,0 +1,14 @@
+CONTROL Printer
+{
+  TYPE			icon
+  CONTAINER_NAME	Top
+  CONTAINER_TYPE	BOX
+  POSITION_HINTS	9
+  LABEL			HP
+  ICON			Fpprnt
+  PUSH_ACTION		PrinterManagerHP
+  DROP_ACTION		PrintHP
+  DROP_ANIMATION	PrinterDrop
+  HELP_TOPIC		FPOnItemPrinter
+  HELP_VOLUME		FPanel
+}

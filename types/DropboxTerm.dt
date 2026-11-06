@@ -1,0 +1,9 @@
+ACTION DropboxTerm
+{
+     LABEL         Dropbox
+     TYPE          COMMAND
+     EXEC_STRING   /home/mattei/.dt/dropbox-terminal.sh
+     ICON          Dropbox
+     WINDOW_TYPE   NO_STDIO
+     DESCRIPTION   Relance Dropbox dans un terminal pour voir ses messages
+}

@@ -1,0 +1,12 @@
+CONTROL Term
+{
+  TYPE			icon
+  CONTAINER_NAME	PersAppsSubpanel
+  CONTAINER_TYPE	SUBPANEL
+  POSITION_HINTS	1
+  ICON			Fpterm
+  LABEL			Xfce Terminal
+  PUSH_ACTION		XFCE_Terminal
+  HELP_TOPIC		FPOnItemTerm
+  HELP_VOLUME		FPanel
+}

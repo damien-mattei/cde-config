@@ -1,0 +1,9 @@
+ACTION ChromiumSnap
+{
+     LABEL         Chromium
+     TYPE          COMMAND
+     EXEC_STRING   /snap/bin/chromium
+     ICON          chrome
+     WINDOW_TYPE   NO_STDIO
+     DESCRIPTION   Chromium Web Browser
+}

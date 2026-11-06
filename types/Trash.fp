@@ -1,0 +1,17 @@
+CONTROL Trash
+{
+  TYPE			icon
+  CONTAINER_NAME	Top
+  CONTAINER_TYPE	BOX
+  POSITION_HINTS	19
+  ICON			Fptrsh
+  LABEL			Trash
+  ALTERNATE_ICON	Fptrsh7
+  FILE_NAME		$HOME/.dt/Trash/.trashinfo
+  MONITOR_TYPE		file
+  PUSH_ACTION		Trash
+  DROP_ACTION		Trash
+  DROP_ANIMATION	TrashDrop
+  HELP_TOPIC		FPOnItemTrash
+  HELP_VOLUME		FPanel
+}

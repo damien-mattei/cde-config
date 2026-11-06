@@ -1,0 +1,11 @@
+CONTROL EmacsPanel
+{
+  TYPE			icon
+  CONTAINER_NAME	Top
+  CONTAINER_TYPE	BOX
+  POSITION_HINTS	2
+  ICON			emacs
+  LABEL			Emacs
+  PUSH_ACTION		Emacs
+  HELP_STRING		Emacs
+}

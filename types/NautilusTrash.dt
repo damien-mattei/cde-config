@@ -1,0 +1,9 @@
+ACTION NautilusTrash
+{
+     LABEL         Nautilus Trash
+     TYPE          COMMAND
+     EXEC_STRING   /usr/bin/nautilus --new-window trash:///
+     ICON          NautilusTrash
+     WINDOW_TYPE   NO_STDIO
+     DESCRIPTION   Opens the Nautilus trash
+}

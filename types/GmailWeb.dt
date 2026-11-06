@@ -1,0 +1,9 @@
+ACTION GmailWeb
+{
+     LABEL         Gmail
+     TYPE          COMMAND
+     EXEC_STRING   /usr/bin/firefox https://mail.google.com
+     ICON          Gmail
+     WINDOW_TYPE   NO_STDIO
+     DESCRIPTION   Opens Gmail in Firefox
+}

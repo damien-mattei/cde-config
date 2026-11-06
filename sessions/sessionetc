@@ -1,0 +1,23 @@
+#!/bin/sh
+# wmclock integre au Front Panel (controle Clock, voir ~/.dt/types/Clock.fp).
+# Un clic sur l'applet ouvre Google Agenda dans Firefox.
+pgrep -u "$(id -u)" -x wmclock >/dev/null ||
+    /usr/bin/wmclock -24 -exe '/usr/bin/firefox https://calendar.google.com' &
+
+# Moniteurs integres au Front Panel (controles WmCpuLoad, WmMemLoad, WmBattery).
+pgrep -u "$(id -u)" -x wmcpuload >/dev/null || /usr/bin/wmcpuload -w &
+pgrep -u "$(id -u)" -x wmmemload >/dev/null || "$HOME/.dt/wmmemload-panel.sh" &
+pgrep -u "$(id -u)" -x wmbattery >/dev/null || wmbattery &
+
+# Reaffiche wmcpuload et wmmemload apres un redemarrage du workspace manager.
+pgrep -u "$(id -u)" -f '^/bin/sh .*panel-applets-watch' >/dev/null || "$HOME/.dt/panel-applets-watch.sh" &
+
+# xeyes integre au Front Panel (controle XEyes), fond couleur du panneau.
+pgrep -u "$(id -u)" -x xeyes >/dev/null || /usr/bin/xeyes -bg '#C6B2A8' +shape +present &
+
+# Zone de notification integree au Front Panel (controle Tray), puis l'applet reseau.
+pgrep -u "$(id -u)" -x stalonetray >/dev/null || "$HOME/.dt/tray-panel.sh" &
+pgrep -u "$(id -u)" -x nm-applet >/dev/null || { sleep 3; nm-applet; } &
+
+# Dropbox (synchronisation de ~/Dropbox).
+pgrep -u "$(id -u)" -x dropbox >/dev/null || "$HOME/.dropbox-dist/dropboxd" &

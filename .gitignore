@@ -1,0 +1,12 @@
+# Journaux et fichiers temporaires de CDE
+errorlog
+startlog*
+sessionlogs/
+tmp/
+Trash/
+appmanager/
+# Anciennes sauvegardes de session et fichiers temporaires de dtsession
+sessions/current.*/
+sessions/current/dt??????
+# Cache du navigateur d aide
+help/

@@ -1,0 +1,9 @@
+ACTION NautilusHome
+{
+     LABEL         Nautilus
+     TYPE          COMMAND
+     EXEC_STRING   /usr/bin/nautilus --new-window /home/mattei
+     ICON          Nautilus
+     WINDOW_TYPE   NO_STDIO
+     DESCRIPTION   Opens Nautilus on the home folder
+}

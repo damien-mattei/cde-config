@@ -1,0 +1,9 @@
+ACTION AppFinder
+{
+     LABEL         Applications
+     TYPE          COMMAND
+     EXEC_STRING   /usr/bin/xfce4-appfinder --disable-server
+     ICON          AppFinder
+     WINDOW_TYPE   NO_STDIO
+     DESCRIPTION   Opens the application directory
+}

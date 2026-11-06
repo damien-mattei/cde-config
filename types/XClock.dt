@@ -1,0 +1,9 @@
+ACTION XClock
+{
+     LABEL         XClock
+     TYPE          COMMAND
+     EXEC_STRING   /home/mattei/.dt/xclock-toggle.sh
+     ICON          Fpclock
+     WINDOW_TYPE   NO_STDIO
+     DESCRIPTION   Opens or closes the borderless digital clock
+}

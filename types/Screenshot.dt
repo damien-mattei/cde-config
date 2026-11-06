@@ -1,0 +1,9 @@
+ACTION Screenshot
+{
+     LABEL         Screenshot
+     TYPE          COMMAND
+     EXEC_STRING   /usr/bin/xfce4-screenshooter
+     ICON          Screenshot
+     WINDOW_TYPE   NO_STDIO
+     DESCRIPTION   Capture d ecran (ecran entier, fenetre ou zone)
+}

@@ -1,4 +1,4 @@
-###  dtwmrc personnel : copie de /usr/dt/config/C/sys.dtwmrc + touches de volume et de luminosite.
+###  dtwmrc personnel : copie de /usr/dt/config/C/sys.dtwmrc + touches de volume, de luminosite et Impr ecran.
 
 # #################################################################
 #
@@ -130,6 +130,9 @@ Keys DtKeyBindings
 #   (xfce4-power-manager ne doit pas les gerer : handle-brightness-keys = false)
     <Key>XF86MonBrightnessUp	root|icon|window	f.exec "$HOME/.dt/brightness.sh up"
     <Key>XF86MonBrightnessDown	root|icon|window	f.exec "$HOME/.dt/brightness.sh down"
+
+#   Touche Impr ecran : capture d ecran (xfce4-screenshooter)
+    <Key>Print			root|icon|window	f.exec "xfce4-screenshooter"
 }
 # ###
 #

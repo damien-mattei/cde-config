@@ -21,3 +21,6 @@ pgrep -u "$(id -u)" -x nm-applet >/dev/null || { sleep 3; nm-applet; } &
 
 # Dropbox (synchronisation de ~/Dropbox).
 pgrep -u "$(id -u)" -x dropbox >/dev/null || "$HOME/.dropbox-dist/dropboxd" &
+
+# Bluetooth dans la zone de notification.
+pgrep -u "$(id -u)" -f 'blueman-applet' >/dev/null || { sleep 4; blueman-applet; } &

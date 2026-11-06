@@ -1,6 +1,7 @@
 #!/bin/sh
 # Touches de volume (liees dans ~/.dt/dtwmrc) : up | down | mute | micmute.
-# Volume limite a 150 %, avec une notification qui montre le niveau.
+# Volume limite a 120 % (au-dela, les haut-parleurs saturent), avec une
+# notification qui montre le niveau.
 sink=@DEFAULT_SINK@
 # Une seule bulle de notification, remplacee a chaque appui (son identifiant
 # est garde ici) au lieu d'en empiler une par appui.
@@ -14,8 +15,8 @@ notify() {    # notify <icone> <texte> [valeur de la barre 0-100]
 case "$1" in
     up)
         v=$(pactl get-sink-volume $sink | sed -n 's/.* \([0-9]*\)% .*/\1/p' | head -1)
-        if [ "${v:-0}" -lt 150 ]; then
-            n=$((v + 5)); [ $n -gt 150 ] && n=150
+        if [ "${v:-0}" -lt 120 ]; then
+            n=$((v + 5)); [ $n -gt 120 ] && n=120
             pactl set-sink-volume $sink "$n%"
         fi
         pactl set-sink-mute $sink 0 ;;
@@ -33,7 +34,7 @@ case "$1" in
 esac
 v=$(pactl get-sink-volume $sink | sed -n 's/.* \([0-9]*\)% .*/\1/p' | head -1)
 if pactl get-sink-mute $sink | grep -q 'oui\|yes'; then
-    notify audio-volume-muted "Son coupé" 0
+    notify audio-volume-muted "Son coupé"    # sans barre (voir plus bas)
 else
     if [ "$v" -eq 0 ]; then i=audio-volume-muted
     elif [ "$v" -lt 34 ]; then i=audio-volume-low
@@ -41,10 +42,12 @@ else
     else i=audio-volume-high; fi
     # Barre a la meme echelle que le curseur de pavucontrol, qui va jusqu'a
     # 153 % : 100 % tombe aux deux tiers et la barre continue au-dela.
-    b=$((v * 100 / 153)); [ $b -gt 100 ] && b=100
+    # Une barre a 0 s'affiche quand meme avec un bout rempli (dessin du theme) :
+    # a 0 %, on montre seulement le texte.
+    b=$((v * 100 / 153)); [ $b -gt 100 ] && b=100; [ $b -eq 0 ] && b=
     if [ "$v" -gt 100 ]; then
         notify $i "Volume $v % (amplifié)" $b
     else
-        notify $i "Volume $v %" $b
+        notify $i "Volume $v %" "$b"
     fi
 fi

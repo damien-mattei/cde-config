@@ -1,4 +1,4 @@
-###  dtwmrc personnel : copie de /usr/dt/config/C/sys.dtwmrc + touches de volume, de luminosite et Impr ecran.
+###  dtwmrc personnel : copie de /usr/dt/config/C/sys.dtwmrc + touches de volume, de luminosite et Impr ecran, et Kill Window (xkill).
 
 # #################################################################
 #
@@ -36,6 +36,8 @@ Menu DtRootMenu
     "Shuffle Down"			f.circle_down
     "Refresh"				f.refresh
     "Minimize/Restore Front Panel"	f.toggle_frontpanel
+     no-label				f.separator
+    "Kill Window"			f.exec "xkill"
      no-label				f.separator
     "Restart Workspace Manager..."	f.restart
      no-label				f.separator

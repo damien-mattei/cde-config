@@ -5,6 +5,8 @@ My personal **CDE** (Common Desktop Environment) setup on Ubuntu: the contents o
 
 ![Front Panel](doc/front-panel.png)
 
+![CDE desktop with the customized Front Panel](doc/desktop.png)
+
 ## What's inside
 
 **Front Panel** (`types/*.fp`)

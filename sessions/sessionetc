@@ -27,3 +27,7 @@ pgrep -u "$(id -u)" -f 'blueman-applet' >/dev/null || { sleep 4; blueman-applet;
 
 # Historique du presse-papiers dans la zone de notification.
 pgrep -u "$(id -u)" -x xfce4-clipman >/dev/null || { sleep 4; xfce4-clipman; } &
+
+# Gestionnaire d'alimentation (bouton marche/arret, capot, inactivite, ecran).
+# Lance ici car dtsession ne le reenregistre pas quand il est relance a la main.
+pgrep -u "$(id -u)" -x xfce4-power-man >/dev/null || xfce4-power-manager &

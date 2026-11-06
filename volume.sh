@@ -39,11 +39,12 @@ else
     elif [ "$v" -lt 34 ]; then i=audio-volume-low
     elif [ "$v" -lt 67 ]; then i=audio-volume-medium
     else i=audio-volume-high; fi
-    # La barre ne va que jusqu'a 100 : au-dela, elle reste pleine et le texte
-    # indique que le son est amplifie.
+    # Barre a la meme echelle que le curseur de pavucontrol, qui va jusqu'a
+    # 153 % : 100 % tombe aux deux tiers et la barre continue au-dela.
+    b=$((v * 100 / 153)); [ $b -gt 100 ] && b=100
     if [ "$v" -gt 100 ]; then
-        notify $i "Volume $v % (amplifié)" 100
+        notify $i "Volume $v % (amplifié)" $b
     else
-        notify $i "Volume $v %" "$v"
+        notify $i "Volume $v %" $b
     fi
 fi

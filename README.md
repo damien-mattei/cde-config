@@ -1,13 +1,11 @@
+![Front Panel](doc/front-panel.png)
+
 # cde-config
 
 My personal **CDE** (Common Desktop Environment) setup on Ubuntu: the contents of
 `~/.dt`, with a Front Panel brought up to date while staying true to the CDE look.
 
-![Front Panel](doc/front-panel.png)
-
 ![CDE desktop with the customized Front Panel](doc/desktop.png)
-
-![Style Manager, subpanel and desktop tools](doc/sun-cde.png)
 
 ## What's inside
 
@@ -23,6 +21,8 @@ My personal **CDE** (Common Desktop Environment) setup on Ubuntu: the contents o
 folder, `xfce4-appfinder`, the CDE calendar, Dropbox (in a terminal that shows its
 sync status), power settings, presentation mode, network connections, screen off,
 screenshot, qps, Psensor, gkrellm…
+
+![Style Manager, subpanel and desktop tools](doc/sun-cde.png)
 
 **Keyboard** (`dtwmrc`, a copy of `sys.dtwmrc` plus bindings)
 - Volume, mute and mic mute → `volume.sh` (a single notification bubble, capped

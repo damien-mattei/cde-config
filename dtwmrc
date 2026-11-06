@@ -1,4 +1,4 @@
-###  dtwmrc personnel : copie de /usr/dt/config/C/sys.dtwmrc + touches de volume, de luminosite et Impr ecran, et Close Window (f.kill).
+###  dtwmrc personnel : copie de /usr/dt/config/C/sys.dtwmrc + touches de volume, de luminosite et Impr ecran, et Close Window (~/.dt/bin/closewin).
 
 # #################################################################
 #
@@ -37,7 +37,7 @@ Menu DtRootMenu
     "Refresh"				f.refresh
     "Minimize/Restore Front Panel"	f.toggle_frontpanel
      no-label				f.separator
-    "Close Window"			f.kill
+    "Close Window"			f.exec "$HOME/.dt/bin/closewin"
      no-label				f.separator
     "Restart Workspace Manager..."	f.restart
      no-label				f.separator

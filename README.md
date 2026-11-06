@@ -26,6 +26,10 @@ screenshot, qps, Psensor, gkrellm…
 - Brightness → `brightness.sh` (logind `SetBrightness`, perceptual steps, down to
   backlight off).
 - Print Screen → `xfce4-screenshooter`.
+- Desktop right-click menu: **Close Window** → `src/closewin.c`: a crosshair, click a
+  window and only that window is asked to close (`WM_DELETE_WINDOW`), unlike `xkill`
+  which kills the whole client with all its windows. (dtwm greys out `f.kill` in the
+  root menu.) Build: `gcc -O -o ~/.dt/bin/closewin ~/.dt/src/closewin.c -lX11`.
 
 **Scripts**
 - `sessions/sessionetc`: run by CDE at login; starts the dockapps, the tray,

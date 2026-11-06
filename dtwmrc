@@ -126,7 +126,7 @@ Keys DtKeyBindings
     <Key>XF86AudioMute		root|icon|window	f.exec "$HOME/.dt/volume.sh mute"
     <Key>XF86AudioMicMute	root|icon|window	f.exec "$HOME/.dt/volume.sh micmute"
 
-#   Touches de luminosite de l'ecran (~/.dt/brightness.sh)
+#   Touches de luminosite de l ecran : ~/.dt/brightness.sh
     <Key>XF86MonBrightnessUp	root|icon|window	f.exec "$HOME/.dt/brightness.sh up"
     <Key>XF86MonBrightnessDown	root|icon|window	f.exec "$HOME/.dt/brightness.sh down"
 }

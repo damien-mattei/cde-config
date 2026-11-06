@@ -15,7 +15,7 @@ My personal **CDE** (Common Desktop Environment) setup on Ubuntu: the contents o
 - Buttons for Firefox, the HP-15C simulator, Emacs, Gmail (in Firefox) and an HP
   printer; the Home Folder button opens Nautilus; the CDE trash at the far right.
 
-**Subpanels** (`types/fp_dynamic/*.fp`): Nautilus, Nautilus trash, an applications
+**Subpanels** (`types/fp_dynamic/*.fp`): the CDE File Manager, Nautilus trash, an applications
 folder, `xfce4-appfinder`, the CDE calendar, Dropbox (in a terminal that shows its
 sync status), power settings, presentation mode, network connections, screen off,
 screenshot, qps, Psensor, gkrellm…

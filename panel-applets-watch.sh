@@ -59,5 +59,14 @@ while xprop -root _NET_SUPPORTED >/dev/null 2>&1 || xdpyinfo >/dev/null 2>&1; do
         xprop -id "$w" WM_CLASS 2>/dev/null | grep -q DockApp && continue
         xwininfo -id "$w" 2>/dev/null | grep -q 'IsUnMapped' && xdotool windowmap "$w"
     done
+    # Les applets du panneau sont lances par sessionetc. Sans WM_COMMAND, CDE ne
+    # les enregistre pas dans la session et ne les relance pas en double (une
+    # copie de wmmemload restait alors avec son cadre sur le bureau).
+    for c in wmclock wmcpuload wmmemload wmbattery xeyes stalonetray; do
+        for w in $(xdotool search --classname "^$c\$" 2>/dev/null); do
+            xprop -id "$w" WM_COMMAND 2>/dev/null | grep -q '{' &&
+                xprop -id "$w" -remove WM_COMMAND
+        done
+    done
     sleep 5
 done

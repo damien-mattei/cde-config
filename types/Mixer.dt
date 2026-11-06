@@ -1,0 +1,9 @@
+ACTION Mixer
+{
+     LABEL         Sound Mixer
+     TYPE          COMMAND
+     EXEC_STRING   /usr/bin/pavucontrol
+     ICON          Mixer
+     WINDOW_TYPE   NO_STDIO
+     DESCRIPTION   Mixeur du son (PulseAudio / PipeWire)
+}

@@ -17,3 +17,5 @@ dtinfo/
 dtgwmrc
 # Fond d'ecran Solaris : image sous droits de Sun/Oracle, non redistribuee
 backdrops/Solaris.pm
+# Fichiers de sauvegarde des editeurs
+*~

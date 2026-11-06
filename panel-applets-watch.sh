@@ -10,7 +10,7 @@ sleep 10    # laisse wmmemload-panel.sh finir au demarrage de la session
 xeyes_relaunch() {
     pkill -u "$(id -u)" -x xeyes || return
     sleep 1
-    setsid /usr/bin/xeyes -bg '#C6B2A8' +shape +present >/dev/null 2>&1 &
+    "$HOME/.dt/xeyes-panel.sh"
 }
 
 # Un redemarrage de dtwm donne deux changements de parent : dtwm relache la

@@ -19,3 +19,5 @@ dtgwmrc
 backdrops/Solaris.pm
 # Fichiers de sauvegarde des editeurs
 *~
+# Binaires compiles (sources dans src/)
+bin/

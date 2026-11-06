@@ -33,7 +33,7 @@ screenshot, qps, Psensor, gkrellm…
 - `panel-applets-watch.sh`: after "Restart Workspace Manager", maps
   `wmcpuload`/`wmmemload` again and relaunches `xeyes` (also after resuming from
   suspend).
-- `wmmemload-panel.sh`, `tray-panel.sh`, `xclock-toggle.sh`,
+- `xeyes-panel.sh`, `wmmemload-panel.sh`, `tray-panel.sh`, `xclock-toggle.sh`,
   `presentation-toggle.sh`, `dropbox-*.sh`.
 
 ## Installation
@@ -58,8 +58,10 @@ papirus-icon-theme`.
 - **No apostrophes in `dtwmrc` comments**: dtwm then silently ignores the bindings
   that follow.
 - dtwm can only grab a key that no other program has already grabbed.
-- `xeyes` must be started with `+present`, otherwise its background stays black in
-  the panel.
+- `xeyes` 1.3 never repaints its background when a window passes over it:
+  `xeyes-panel.sh` starts it with `+present` and gives its drawing window a background
+  colour with the small `src/setbg.c` tool, so the X server repaints it instead.
+  Build: `gcc -O -o ~/.dt/bin/setbg ~/.dt/src/setbg.c -lX11`.
 - CDE only remembers the workspaces of old-style X clients (`dtcm`, `xload`,
   `xeyes`…); modern apps all come back on the current workspace.
 

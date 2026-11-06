@@ -13,7 +13,7 @@ pgrep -u "$(id -u)" -x wmbattery >/dev/null || wmbattery &
 pgrep -u "$(id -u)" -f '^/bin/sh .*panel-applets-watch' >/dev/null || "$HOME/.dt/panel-applets-watch.sh" &
 
 # xeyes integre au Front Panel (controle XEyes), fond couleur du panneau.
-pgrep -u "$(id -u)" -x xeyes >/dev/null || /usr/bin/xeyes -bg '#C6B2A8' +shape +present &
+pgrep -u "$(id -u)" -x xeyes >/dev/null || "$HOME/.dt/xeyes-panel.sh" &
 
 # Zone de notification integree au Front Panel (controle Tray), puis l'applet reseau.
 pgrep -u "$(id -u)" -x stalonetray >/dev/null || "$HOME/.dt/tray-panel.sh" &

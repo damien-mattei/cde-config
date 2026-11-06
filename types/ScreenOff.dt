@@ -1,0 +1,9 @@
+ACTION ScreenOff
+{
+     LABEL         Screen Off
+     TYPE          COMMAND
+     EXEC_STRING   /bin/sh -c "sleep 1; xset dpms force off"
+     ICON          ScreenOff
+     WINDOW_TYPE   NO_STDIO
+     DESCRIPTION   Eteint l ecran ; une touche ou la souris le rallume
+}

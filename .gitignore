@@ -10,3 +10,10 @@ sessions/current.*/
 sessions/current/dt??????
 # Cache du navigateur d aide
 help/
+# Donnees personnelles, gardees sur la machine mais pas partagees
+sessions/current/
+sessions/dtwmfp.session
+dtinfo/
+dtgwmrc
+# Fond d'ecran Solaris : image sous droits de Sun/Oracle, non redistribuee
+backdrops/Solaris.pm

@@ -39,8 +39,9 @@ screenshot, qps, Psensor, gkrellm…
 - `panel-applets-watch.sh`: after "Restart Workspace Manager", maps
   `wmcpuload`/`wmmemload` again and relaunches `xeyes` (also after resuming from
   suspend).
-- `lock-cde.sh`: the screen lock used by `xfce4-power-manager` before suspending, so
-  that CDE's lock is the only one (see below).
+- `lock-on-sleep.py`: locks the screen with CDE (`lock-cde.sh`, i.e. `dtaction
+  LockDisplay`) before every suspend, holding a logind delay inhibitor like
+  `xfce4-screensaver` does. CDE predates suspend and doesn't lock by itself then.
 - `xeyes-panel.sh`, `wmmemload-panel.sh`, `tray-panel.sh`, `xclock-toggle.sh`,
   `presentation-toggle.sh`, `dropbox-*.sh`.
 
@@ -51,8 +52,10 @@ screenshot, qps, Psensor, gkrellm…
    `grep -rl /home/mattei ~/.dt`.
 3. Make CDE the only screen locker (otherwise `xfce4-screensaver` cannot lock a
    screen CDE has already locked, and the suspend stops on a question):
+   `xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/lock-screen-suspend-hibernate -s false`,
+   `xfconf-query -c xfce4-screensaver -p /lock/sleep-activation -s false`, and
    `xfconf-query -c xfce4-session -p /general/LockCommand -s $HOME/.dt/lock-cde.sh`
-   and `xfconf-query -c xfce4-screensaver -p /lock/sleep-activation -s false`.
+   (for `xflock4`).
 4. Right-click the desktop → **Restart Workspace Manager**, then log out and back in
    so that `sessionetc` runs.
 

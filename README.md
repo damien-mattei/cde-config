@@ -5,7 +5,7 @@
 My personal **CDE** (Common Desktop Environment) setup on Ubuntu: the contents of
 `~/.dt`, with a Front Panel brought up to date while staying true to the CDE look.
 
-![CDE desktop: Style Manager, dtinfo, HP-15C and the customized Front Panel](doc/cde-desktop.png)
+![CDE desktop: Style Manager, dtinfo, HP-15C, the Desktop Style subpanel and the customized Front Panel](doc/cde-desktop.png)
 
 ## What's inside
 

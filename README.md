@@ -64,6 +64,50 @@ stalonetray network-manager-gnome blueman xfce4-clipman xfce4-power-manager
 xfce4-screenshooter pavucontrol nautilus xdotool x11-utils libnotify-bin
 papirus-icon-theme`.
 
+## Power saving, screen and lock: who does what
+
+**Screen and system sleep: `xfce4-power-manager`** (Desktop Style subpanel →
+**Power**, or `xfce4-power-manager-settings`). My settings:
+
+| Setting | On AC | On battery | Tab |
+|---|---|---|---|
+| Dim the screen | 20 min | 5 min | Display |
+| Screen standby | 25 min | 15 min | Display |
+| Screen off | 30 min | 25 min | Display |
+| System sleep when inactive | 45 min | 14 min | System |
+| Lid closed | suspend | suspend | General |
+| Power button | suspend | – | General |
+
+- Don't use "Ask" for the power button: under CDE (no `xfce4-session`) it logs the
+  session out at once.
+- Keep "Lock screen when system is going to sleep" unchecked: CDE handles the
+  lock (below), and two lockers block each other.
+- The **presentation mode** button (Desktop Style subpanel) suspends all these
+  timers; click it again to turn it off.
+
+**Screen lock: CDE only**
+- After inactivity: Style Manager → **Screen** (30 min here; the CDE screen saver is
+  off).
+- By hand: the padlock on the Front Panel.
+- Before every suspend (lid, power button, inactivity): `lock-on-sleep.py`, started
+  by `sessionetc`. Nothing to set.
+
+**Left idle**: `xfce4-screensaver` still runs but neither locks nor shows a saver
+(`/lock/sleep-activation`, `/saver/enabled` and `/saver/idle-activation/enabled`
+are false). Don't turn it back on, or the two lockers fight again: CDE's lock grabs
+the keyboard, `xfce4-screensaver` then fails, and the power manager stops the
+suspend on a question nobody answers.
+
+**Brightness**: the keys go to `brightness.sh`; "Handle display brightness keys" is
+off in the power manager.
+
+**Order of events**: on AC the screen goes off at 30 min, when CDE locks; on
+battery the laptop suspends at 14 min and is locked by `lock-on-sleep.py`. Either
+way, the machine is never left unlocked for long.
+
+If suspend is ever delayed again, check `systemd-inhibit --list`: logind lets an
+app hold the suspend back for up to `InhibitDelayMaxSec` (30 s on Ubuntu).
+
 ## CDE tips learned along the way
 
 - Controls sharing the same `POSITION_HINTS` are ordered by **reverse alphabetical

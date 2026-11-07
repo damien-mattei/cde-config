@@ -39,6 +39,8 @@ screenshot, qps, Psensor, gkrellm…
 - `panel-applets-watch.sh`: after "Restart Workspace Manager", maps
   `wmcpuload`/`wmmemload` again and relaunches `xeyes` (also after resuming from
   suspend).
+- `lock-cde.sh`: the screen lock used by `xfce4-power-manager` before suspending, so
+  that CDE's lock is the only one (see below).
 - `xeyes-panel.sh`, `wmmemload-panel.sh`, `tray-panel.sh`, `xclock-toggle.sh`,
   `presentation-toggle.sh`, `dropbox-*.sh`.
 
@@ -47,7 +49,11 @@ screenshot, qps, Psensor, gkrellm…
 1. Copy the files into `~/.dt` (back up your own first).
 2. Replace `/home/mattei` with your home directory in the files that contain it:
    `grep -rl /home/mattei ~/.dt`.
-3. Right-click the desktop → **Restart Workspace Manager**, then log out and back in
+3. Make CDE the only screen locker (otherwise `xfce4-screensaver` cannot lock a
+   screen CDE has already locked, and the suspend stops on a question):
+   `xfconf-query -c xfce4-session -p /general/LockCommand -s $HOME/.dt/lock-cde.sh`
+   and `xfconf-query -c xfce4-screensaver -p /lock/sleep-activation -s false`.
+4. Right-click the desktop → **Restart Workspace Manager**, then log out and back in
    so that `sessionetc` runs.
 
 Packages used (Ubuntu): `wmclock wmcpuload wmmemload wmbattery x11-apps

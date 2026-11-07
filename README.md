@@ -77,6 +77,9 @@ papirus-icon-theme`.
   `xeyes-panel.sh` starts it with `+present` and gives its drawing window a background
   colour with the small `src/setbg.c` tool, so the X server repaints it instead.
   Build: `gcc -O -o ~/.dt/bin/setbg ~/.dt/src/setbg.c -lX11`.
+- `xss-lock` can't run under CDE ("Failed to set screensaver attributes"): `dtsession`
+  already uses the MIT-SCREEN-SAVER extension, which accepts a single client. Hence
+  `lock-on-sleep.py`.
 - CDE only remembers the workspaces of old-style X clients (`dtcm`, `xload`,
   `xeyes`…); modern apps all come back on the current workspace.
 

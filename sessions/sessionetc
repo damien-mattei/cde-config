@@ -32,5 +32,7 @@ pgrep -u "$(id -u)" -x xfce4-clipman >/dev/null || { sleep 4; xfce4-clipman; } &
 # Lance ici car dtsession ne le reenregistre pas quand il est relance a la main.
 pgrep -u "$(id -u)" -x xfce4-power-man >/dev/null || xfce4-power-manager &
 
-# Verrou CDE avant chaque mise en veille (une seule copie)
-pgrep -u "$(id -u)" -f lock-on-sleep.py >/dev/null || "$HOME/.dt/lock-on-sleep.py" &
+# Verrou CDE avant chaque mise en veille (une seule copie).
+# xss-lock ne marche pas sous CDE : dtsession utilise deja l extension
+# MIT-SCREEN-SAVER ("Failed to set screensaver attributes").
+pgrep -u "$(id -u)" -f '[l]ock-on-sleep.py' >/dev/null || "$HOME/.dt/lock-on-sleep.py" &

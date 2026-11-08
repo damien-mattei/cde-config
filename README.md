@@ -13,7 +13,10 @@ My personal **CDE** (Common Desktop Environment) setup on Ubuntu: the contents o
 - Dockapps embedded in the panel (`TYPE client` controls): `wmclock` (a click opens
   Google Calendar), `wmcpuload`, `wmmemload`, `wmbattery`, and `xeyes`.
 - A 3×2 `stalonetray` system tray inside the panel (network, Bluetooth, clipboard
-  history, IBus, Psensor…).
+  history, IBus, Psensor…). dtwm keeps the right click for its own panel menu, so
+  **middle-click or Ctrl+left-click** an icon to get the app's menu (`src/trayclick.c`;
+  works with Qt apps such as Telegram, GTK 3 applets ignore it and use their left
+  click). Build: `gcc -O -o ~/.dt/bin/trayclick ~/.dt/src/trayclick.c -lX11`.
 - Buttons for Firefox, the HP-15C simulator, Emacs, Gmail (in Firefox) and an HP
   printer; the Home Folder button opens Nautilus; the CDE trash at the far right.
 
@@ -117,6 +120,9 @@ app hold the suspend back for up to `InhibitDelayMaxSec` (30 s on Ubuntu).
 - **No apostrophes in `dtwmrc` comments**: dtwm then silently ignores the bindings
   that follow.
 - dtwm can only grab a key that no other program has already grabbed.
+- On a `TYPE client` control, dtwm grabs mouse button 3 with any modifier for its
+  popup menu: the embedded client never sees a right click. Synthetic clicks
+  (`XSendEvent`) reach Qt apps but GTK 3 drops them.
 - `xeyes` 1.3 never repaints its background when a window passes over it:
   `xeyes-panel.sh` starts it with `+present` and gives its drawing window a background
   colour with the small `src/setbg.c` tool, so the X server repaints it instead.

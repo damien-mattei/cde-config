@@ -104,6 +104,11 @@ suspend on a question nobody answers.
 **Brightness**: the keys go to `brightness.sh`; "Handle display brightness keys" is
 off in the power manager.
 
+**Keyboard backlight** (Acer Aspire A517-53): Linux has no control over it (no
+`kbd_backlight` LED, it is driven by the embedded controller). Enable "Keyboard
+Lighting Timeout" in the BIOS (F2): the keyboard goes dark after about 30 s without
+a key press.
+
 **Order of events**: on AC the screen goes off at 30 min, when CDE locks; on
 battery the laptop suspends at 14 min and is locked by `lock-on-sleep.py`. Either
 way, the machine is never left unlocked for long.

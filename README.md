@@ -79,8 +79,8 @@ papirus-icon-theme`.
 | Setting | On AC | On battery | Tab |
 |---|---|---|---|
 | Blank the screen (starts the CDE saver, see below) | 20 min | 5 min | Display |
-| Screen standby | 25 min | 15 min | Display |
-| Screen off | 30 min | 25 min | Display |
+| Screen standby | 40 min | 15 min | Display |
+| Screen off | 45 min | 25 min | Display |
 | System sleep when inactive | 45 min | never | System |
 | Lid closed | suspend | suspend | General |
 | Power button | suspend | – | General |
@@ -131,8 +131,8 @@ so no saver. Test right away with `xset s activate`.
   clicking OK, then check with `xrdb -query | grep extension`.
 - "Blank Screen" in the saver list is just a black screen.
 
-**Order of events**: on AC the saver starts at 20 min, the screen goes on standby at
-25 and off at 30, when CDE locks (10 min after the saver started). On battery the
+**Order of events**: on AC the saver starts at 20 min, CDE locks at 30 (10 min
+after the saver started), the screen goes on standby at 40 and off at 45. On battery the
 saver starts at 5 min and CDE locks 10 min later, at 15, when the screen goes on
 standby; it is off at 25. There is no automatic suspend on battery.
 

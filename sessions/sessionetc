@@ -8,7 +8,7 @@ pgrep -u "$(id -u)" -x wmclock >/dev/null ||
 pgrep -u "$(id -u)" -x wmcpuload >/dev/null || /usr/bin/wmcpuload -w &
 pgrep -u "$(id -u)" -x wmmemload >/dev/null || "$HOME/.dt/wmmemload-panel.sh" &
 pgrep -u "$(id -u)" -x wmbattery >/dev/null || wmbattery -l 30 -c 10 &
-# Son + notification chaque minute sous 30 % sur batterie (urgente sous 10 %)
+# Alarme batterie : son chaque minute sous 30 % sur batterie, bip strident sous 10 %
 pgrep -u "$(id -u)" -f "[b]attery-alarm.sh" >/dev/null || "$HOME/.dt/battery-alarm.sh" &
 
 # Reaffiche wmcpuload et wmmemload apres un redemarrage du workspace manager.

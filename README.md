@@ -95,7 +95,7 @@ papirus-icon-theme`.
   position), not 14 minutes.
 
 **Screen lock: CDE only**
-- After inactivity: Style Manager → **Screen** (30 min here).
+- After inactivity: Style Manager → **Screen**: saver on at 20 min, lock at 30 min.
 - By hand: the padlock on the Front Panel.
 - Before every suspend (lid, power button, inactivity): `lock-on-sleep.py`, started
   by `sessionetc`. Nothing to set.
@@ -122,9 +122,19 @@ starts at the power manager's blank time (20 min on AC, 5 on battery); set the s
 value in Style Manager to avoid surprises. Presentation mode sets the timeout to 0,
 so no saver. Test right away with `xset s activate`.
 
+- dtsession starts the saver when the X timeout fires and locks (Start Lock −
+  Start Saver) later; if Start Lock ≤ Start Saver, or the saver is off, it locks at
+  once.
+- Style Manager quirk: when the X timeout doesn't match its settings (the power
+  manager changed it), the Screen dialog *shows* the saved Start Lock value but
+  *sends* the X timeout as the lock time. Move the Start Lock slider before
+  clicking OK, then check with `xrdb -query | grep extension`.
+- "Blank Screen" in the saver list is just a black screen.
+
 **Order of events**: on AC the saver starts at 20 min, the screen goes on standby at
-25 and off at 30, when CDE locks. On battery the saver starts at 5 min, the screen
-is off at 25 and CDE locks at 30; there is no automatic suspend on battery.
+25 and off at 30, when CDE locks (10 min after the saver started). On battery the
+saver starts at 5 min and CDE locks 10 min later, at 15, when the screen goes on
+standby; it is off at 25. There is no automatic suspend on battery.
 
 If suspend is ever delayed again, check `systemd-inhibit --list`: logind lets an
 app hold the suspend back for up to `InhibitDelayMaxSec` (30 s on Ubuntu).

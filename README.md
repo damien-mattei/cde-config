@@ -78,10 +78,10 @@ papirus-icon-theme`.
 
 | Setting | On AC | On battery | Tab |
 |---|---|---|---|
-| Dim the screen | 20 min | 5 min | Display |
+| Blank the screen (starts the CDE saver, see below) | 20 min | 5 min | Display |
 | Screen standby | 25 min | 15 min | Display |
 | Screen off | 30 min | 25 min | Display |
-| System sleep when inactive | 45 min | 14 min | System |
+| System sleep when inactive | 45 min | never | System |
 | Lid closed | suspend | suspend | General |
 | Power button | suspend | – | General |
 
@@ -91,10 +91,11 @@ papirus-icon-theme`.
   lock (below), and two lockers block each other.
 - The **presentation mode** button (Desktop Style subpanel) suspends all these
   timers; click it again to turn it off.
+- In xfconf, `inactivity-on-battery = 14` means **never** (the slider's lowest
+  position), not 14 minutes.
 
 **Screen lock: CDE only**
-- After inactivity: Style Manager → **Screen** (30 min here; the CDE screen saver is
-  off).
+- After inactivity: Style Manager → **Screen** (30 min here).
 - By hand: the padlock on the Front Panel.
 - Before every suspend (lid, power button, inactivity): `lock-on-sleep.py`, started
   by `sessionetc`. Nothing to set.
@@ -113,9 +114,17 @@ off in the power manager.
 Lighting Timeout" in the BIOS (F2): the keyboard goes dark after about 30 s without
 a key press.
 
-**Order of events**: on AC the screen goes off at 30 min, when CDE locks; on
-battery the laptop suspends at 14 min and is locked by `lock-on-sleep.py`. Either
-way, the machine is never left unlocked for long.
+**CDE screen savers** (Style Manager → **Screen**, Screen Saver On): there is only
+one X screen saver timeout, and both `dtsession` and the power manager write it
+(`XSetScreenSaver`); the power manager rewrites it with its "blank" value at every
+AC/battery switch and when presentation mode changes. So the CDE saver actually
+starts at the power manager's blank time (20 min on AC, 5 on battery); set the same
+value in Style Manager to avoid surprises. Presentation mode sets the timeout to 0,
+so no saver. Test right away with `xset s activate`.
+
+**Order of events**: on AC the saver starts at 20 min, the screen goes on standby at
+25 and off at 30, when CDE locks. On battery the saver starts at 5 min, the screen
+is off at 25 and CDE locks at 30; there is no automatic suspend on battery.
 
 If suspend is ever delayed again, check `systemd-inhibit --list`: logind lets an
 app hold the suspend back for up to `InhibitDelayMaxSec` (30 s on Ubuntu).

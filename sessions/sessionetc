@@ -7,7 +7,9 @@ pgrep -u "$(id -u)" -x wmclock >/dev/null ||
 # Moniteurs integres au Front Panel (controles WmCpuLoad, WmMemLoad, WmBattery).
 pgrep -u "$(id -u)" -x wmcpuload >/dev/null || /usr/bin/wmcpuload -w &
 pgrep -u "$(id -u)" -x wmmemload >/dev/null || "$HOME/.dt/wmmemload-panel.sh" &
-pgrep -u "$(id -u)" -x wmbattery >/dev/null || wmbattery &
+pgrep -u "$(id -u)" -x wmbattery >/dev/null || wmbattery -l 30 -c 10 &
+# Son + notification quand la batterie passe sous 30 % puis 10 %
+pgrep -u "$(id -u)" -f "[b]attery-alarm.sh" >/dev/null || "$HOME/.dt/battery-alarm.sh" &
 
 # Reaffiche wmcpuload et wmmemload apres un redemarrage du workspace manager.
 pgrep -u "$(id -u)" -f '^/bin/sh .*panel-applets-watch' >/dev/null || "$HOME/.dt/panel-applets-watch.sh" &

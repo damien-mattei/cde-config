@@ -45,6 +45,10 @@ screenshot, qps, Psensor, gkrellm…
 - `lock-on-sleep.py`: locks the screen with CDE (`lock-cde.sh`, i.e. `dtaction
   LockDisplay`) before every suspend, holding a logind delay inhibitor like
   `xfce4-screensaver` does. CDE predates suspend and doesn't lock by itself then.
+- `battery-alarm.sh`: a sound and a notification when the battery, discharging,
+  drops below 30 % then 10 % (`wmbattery -a` writes to `/dev/audio`, which no
+  longer exists); `wmbattery -l 30 -c 10` turns its icon yellow/red at the same
+  levels.
 - `xeyes-panel.sh`, `wmmemload-panel.sh`, `tray-panel.sh`, `xclock-toggle.sh`,
   `presentation-toggle.sh`, `dropbox-*.sh`.
 

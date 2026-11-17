@@ -17,10 +17,9 @@ pgrep -u "$(id -u)" -f '^/bin/sh .*panel-applets-watch' >/dev/null || "$HOME/.dt
 # xeyes integre au Front Panel (controle XEyes), fond couleur du panneau.
 pgrep -u "$(id -u)" -x xeyes >/dev/null || "$HOME/.dt/xeyes-panel.sh" &
 
-# Zone de notification integree au Front Panel (controle Tray), puis l'applet reseau.
+# Zone de notification en bas a droite (fenetre a part, tous les bureaux),
+# puis l'applet reseau. (src/trayclick.c ne sert que si la zone est dans le panneau.)
 pgrep -u "$(id -u)" -x stalonetray >/dev/null || "$HOME/.dt/tray-panel.sh" &
-# Clic du milieu ou Ctrl + clic gauche sur une icone = clic droit (dtwm prend le vrai)
-pgrep -u "$(id -u)" -x trayclick >/dev/null || "$HOME/.dt/bin/trayclick" &
 pgrep -u "$(id -u)" -x nm-applet >/dev/null || { sleep 3; nm-applet; } &
 
 # Dropbox (synchronisation de ~/Dropbox).

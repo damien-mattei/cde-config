@@ -40,6 +40,19 @@ xeyes_watch() {
     done
 }
 xeyes_watch &
+
+# Zone de notification (tray-panel.sh) : la garder dans le coin en bas a droite
+# du bureau quand sa taille change (ecran HDMI branche ou debranche).
+tray_root=
+tray_corner() {
+    r=$(xwininfo -root 2>/dev/null | awk '/^  Width/{w=$2}/^  Height/{h=$2}END{print w"x"h}')
+    [ "$r" = "$tray_root" ] && return
+    t=$(xdotool search --classname '^stalonetray$' 2>/dev/null | head -1)
+    [ -n "$t" ] || return
+    eval "$(xdotool getwindowgeometry --shell "$t")"   # WIDTH HEIGHT
+    xdotool windowmove "$t" $(( ${r%x*} - WIDTH )) $(( ${r#*x} - HEIGHT ))
+    tray_root=$r
+}
 last=$(date +%s)
 while xprop -root _NET_SUPPORTED >/dev/null 2>&1 || xdpyinfo >/dev/null 2>&1; do
     # Sortie de veille : l'horloge a fait un bond bien plus grand que la pause de 5 s.
@@ -49,6 +62,7 @@ while xprop -root _NET_SUPPORTED >/dev/null 2>&1 || xdpyinfo >/dev/null 2>&1; do
         xeyes_relaunch
     fi
     last=$now
+    tray_corner
     for w in $(xdotool search --name '^wmcpuload$' 2>/dev/null); do
         info=$(xwininfo -id "$w" 2>/dev/null) || continue
         echo "$info" | grep -q 'Width: 1$' && continue    # fenetre de groupe

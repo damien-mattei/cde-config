@@ -12,13 +12,19 @@ My personal **CDE** (Common Desktop Environment) setup on Ubuntu: the contents o
 **Front Panel** (`types/*.fp`)
 - Dockapps embedded in the panel (`TYPE client` controls): `wmclock` (a click opens
   Google Calendar), `wmcpuload`, `wmmemload`, `wmbattery`, and `xeyes`.
-- A 3×2 `stalonetray` system tray inside the panel (network, Bluetooth, clipboard
-  history, IBus, Psensor…). dtwm keeps the right click for its own panel menu, so
-  **middle-click or Ctrl+left-click** an icon to get the app's menu (`src/trayclick.c`;
-  works with Qt apps such as Telegram, GTK 3 applets ignore it and use their left
-  click). Build: `gcc -O -o ~/.dt/bin/trayclick ~/.dt/src/trayclick.c -lX11`.
 - Buttons for Firefox, the HP-15C simulator, Emacs, Gmail (in Firefox) and an HP
   printer; the Home Folder button opens Nautilus; the CDE trash at the far right.
+
+**System tray** (`tray-panel.sh`): a `stalonetray` column in the bottom-right corner
+of the desktop, outside the Front Panel (NsCDE style), on every workspace, growing
+upwards as icons appear (network, Bluetooth, clipboard history, IBus, Telegram…).
+Outside the panel the right click reaches the icons. It is put on every workspace
+by `src/occupyall.c` (`DtWsmOccupyAllWorkspaces`; dtwm ignores `--sticky`) and kept
+in the corner when it grows or the screen size changes. Build:
+`gcc -O -o ~/.dt/bin/occupyall ~/.dt/src/occupyall.c -I/usr/dt/include -L/usr/dt/lib
+-Wl,-rpath,/usr/dt/lib -lDtSvc -ltt -lDtXinerama -lXm -lXt -lX11`.
+(`src/trayclick.c`, unused now, turned a middle-click into a right click when the
+tray was inside the panel.)
 
 **Subpanels** (`types/fp_dynamic/*.fp`): the CDE File Manager, Nautilus trash, an applications
 folder, `xfce4-appfinder`, the CDE calendar, Dropbox (in a terminal that shows its
@@ -150,7 +156,11 @@ app hold the suspend back for up to `InhibitDelayMaxSec` (30 s on Ubuntu).
 - dtwm can only grab a key that no other program has already grabbed.
 - On a `TYPE client` control, dtwm grabs mouse button 3 with any modifier for its
   popup menu: the embedded client never sees a right click. Synthetic clicks
-  (`XSendEvent`) reach Qt apps but GTK 3 drops them.
+  (`XSendEvent`) reach Qt apps but GTK 3 drops them. Hence the tray outside the
+  panel.
+- dtwm keeps the top-left corner of a window fixed when the client resizes it,
+  whatever its gravity: `tray-panel.sh` moves the tray back into the corner on each
+  `ConfigureNotify`.
 - `xeyes` 1.3 never repaints its background when a window passes over it:
   `xeyes-panel.sh` starts it with `+present` and gives its drawing window a background
   colour with the small `src/setbg.c` tool, so the X server repaints it instead.

@@ -21,3 +21,5 @@ backdrops/Solaris.pm
 *~
 # Binaires compiles (sources dans src/)
 bin/
+# Raccourcis personnels vers des documents (deposes dans un tiroir)
+types/fp_dynamic/newman_s1.fp

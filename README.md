@@ -31,6 +31,8 @@ tray was inside the panel.)
 
 ![The system tray in the bottom-right corner: network, keyboard layout, Bluetooth, clipboard](doc/tray-corner.png)
 
+![The whole desktop with the tray in the bottom-right corner, outside the Front Panel](doc/cde-desktop-tray.png)
+
 **Subpanels** (`types/fp_dynamic/*.fp`): the CDE File Manager, Nautilus trash, an applications
 folder, `xfce4-appfinder`, the CDE calendar, Dropbox (in a terminal that shows its
 sync status), power settings, presentation mode, network connections, screen off,

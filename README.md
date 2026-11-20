@@ -18,13 +18,18 @@ My personal **CDE** (Common Desktop Environment) setup on Ubuntu: the contents o
 **System tray** (`tray-panel.sh`): a `stalonetray` column in the bottom-right corner
 of the desktop, outside the Front Panel (NsCDE style), on every workspace, growing
 upwards as icons appear (network, Bluetooth, clipboard history, IBus, Telegram…).
-Outside the panel the right click reaches the icons. It is put on every workspace
+Outside the panel the buttons of the icons work much better: the right click
+(app menu) reaches every icon, GTK 3 applets included, which was impossible inside the
+panel where dtwm keeps it for its own menu, and the Front Panel itself is shorter.
+It is put on every workspace
 by `src/occupyall.c` (`DtWsmOccupyAllWorkspaces`; dtwm ignores `--sticky`) and kept
 in the corner when it grows or the screen size changes. Build:
 `gcc -O -o ~/.dt/bin/occupyall ~/.dt/src/occupyall.c -I/usr/dt/include -L/usr/dt/lib
 -Wl,-rpath,/usr/dt/lib -lDtSvc -ltt -lDtXinerama -lXm -lXt -lX11`.
 (`src/trayclick.c`, unused now, turned a middle-click into a right click when the
 tray was inside the panel.)
+
+![The system tray in the bottom-right corner: network, keyboard layout, Bluetooth, clipboard](doc/tray-corner.png)
 
 **Subpanels** (`types/fp_dynamic/*.fp`): the CDE File Manager, Nautilus trash, an applications
 folder, `xfce4-appfinder`, the CDE calendar, Dropbox (in a terminal that shows its

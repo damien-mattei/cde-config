@@ -17,6 +17,9 @@ pgrep -u "$(id -u)" -f '^/bin/sh .*panel-applets-watch' >/dev/null || "$HOME/.dt
 # xeyes integre au Front Panel (controle XEyes), fond couleur du panneau.
 pgrep -u "$(id -u)" -x xeyes >/dev/null || "$HOME/.dt/xeyes-panel.sh" &
 
+# Polices lisibles pour les menus d'ImageMagick (display...) : voir imagemagick.resources.
+xrdb -merge "$HOME/.dt/imagemagick.resources"
+
 # Zone de notification en bas a droite (fenetre a part, tous les bureaux),
 # puis l'applet reseau. (src/trayclick.c ne sert que si la zone est dans le panneau.)
 pgrep -u "$(id -u)" -x stalonetray >/dev/null || "$HOME/.dt/tray-panel.sh" &

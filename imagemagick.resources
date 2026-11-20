@@ -1,0 +1,43 @@
+! ImageMagick (display, animate, import, montage) : police des menus et boutons.
+! CDE definit *Font, *FontList et *textFontList avec la police -dt-interface
+! sans jeu de caracteres : un programme non-Motif en prend la premiere qui
+! correspond (gb2312, chinois), et le texte des menus est invisible.
+! Les noms precis ci-dessous l emportent sur les motifs generaux de CDE.
+! Charge par sessions/sessionetc : xrdb -merge ~/.dt/imagemagick.resources
+
+display.font: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+display.fontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+display.textFontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+display-im6.font: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+display-im6.fontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+display-im6.textFontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+display-im6.q16.font: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+display-im6.q16.fontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+display-im6.q16.textFontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+animate.font: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+animate.fontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+animate.textFontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+animate-im6.font: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+animate-im6.fontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+animate-im6.textFontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+animate-im6.q16.font: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+animate-im6.q16.fontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+animate-im6.q16.textFontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+import.font: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+import.fontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+import.textFontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+import-im6.font: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+import-im6.fontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+import-im6.textFontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+import-im6.q16.font: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+import-im6.q16.fontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+import-im6.q16.textFontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+montage.font: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+montage.fontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+montage.textFontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+montage-im6.font: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+montage-im6.fontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+montage-im6.textFontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+montage-im6.q16.font: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+montage-im6.q16.fontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1
+montage-im6.q16.textFontList: -dt-interface user-medium-r-normal-m*-*-*-*-*-*-*-iso8859-1

@@ -172,6 +172,12 @@ app hold the suspend back for up to `InhibitDelayMaxSec` (30 s on Ubuntu).
   `xeyes-panel.sh` starts it with `+present` and gives its drawing window a background
   colour with the small `src/setbg.c` tool, so the X server repaints it instead.
   Build: `gcc -O -o ~/.dt/bin/setbg ~/.dt/src/setbg.c -lX11`.
+- Non-Motif X programs such as ImageMagick (`display`, `animate`, `import`, `montage`)
+  show **no text in their menus and buttons**: CDE sets `*Font`, `*FontList` and
+  `*textFontList` to `-dt-interface ...` without a charset, and a plain X client takes
+  the first match, a Chinese `gb2312` font with no Latin letters. `imagemagick.resources`
+  (merged by `sessionetc`) points those programs at the Latin-1 variant, which keeps
+  the CDE look. Note that `xrdb` runs `cpp`: no apostrophes in its comments either.
 - `xss-lock` can't run under CDE ("Failed to set screensaver attributes"): `dtsession`
   already uses the MIT-SCREEN-SAVER extension, which accepts a single client. Hence
   `lock-on-sleep.py`.

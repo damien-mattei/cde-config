@@ -53,6 +53,7 @@ tray_corner() {
     xdotool windowmove "$t" $(( ${r%x*} - WIDTH )) $(( ${r#*x} - HEIGHT ))
     tray_root=$r
 }
+xeyes_down=0
 last=$(date +%s)
 while xprop -root _NET_SUPPORTED >/dev/null 2>&1 || xdpyinfo >/dev/null 2>&1; do
     # Sortie de veille : l'horloge a fait un bond bien plus grand que la pause de 5 s.
@@ -73,6 +74,21 @@ while xprop -root _NET_SUPPORTED >/dev/null 2>&1 || xdpyinfo >/dev/null 2>&1; do
         xprop -id "$w" WM_CLASS 2>/dev/null | grep -q DockApp && continue
         xwininfo -id "$w" 2>/dev/null | grep -q 'IsUnMapped' && xdotool windowmap "$w"
     done
+    # Apres un changement du nombre de bureaux (ou du panneau), dtwm retire parfois
+    # le calendrier et la batterie du panneau : les remettre (comme ci-dessus).
+    for c in wmclock wmbattery; do
+        for w in $(xdotool search --classname "^$c\$" 2>/dev/null); do
+            xwininfo -id "$w" 2>/dev/null | grep -q 'IsUnMapped' && xdotool windowmap "$w"
+        done
+    done
+    # xeyes demappe de la meme facon : le relancer s il reste ainsi 2 passages (10 s),
+    # le temps que dtwm l integre apres un lancement normal.
+    if xdotool search --classname '^xeyes$' 2>/dev/null | head -1 | xargs -r xwininfo -id 2>/dev/null | grep -q 'IsUnMapped'; then
+        xeyes_down=$((xeyes_down + 1))
+        if [ "$xeyes_down" -ge 2 ]; then xeyes_down=0; xeyes_relaunch; fi
+    else
+        xeyes_down=0
+    fi
     # Les applets du panneau sont lances par sessionetc. Sans WM_COMMAND, CDE ne
     # les enregistre pas dans la session et ne les relance pas en double (une
     # copie de wmmemload restait alors avec son cadre sur le bureau).

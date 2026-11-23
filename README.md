@@ -52,9 +52,12 @@ screenshot, qps, Psensor, gkrellm…
 **Scripts**
 - `sessions/sessionetc`: run by CDE at login; starts the dockapps, the tray,
   `nm-applet`, `blueman-applet`, `xfce4-clipman` and Dropbox.
-- `panel-applets-watch.sh`: after "Restart Workspace Manager", maps
-  `wmcpuload`/`wmmemload` again and relaunches `xeyes` (also after resuming from
-  suspend).
+- `panel-applets-watch.sh`: after "Restart Workspace Manager" or after the number of
+  workspaces changes, maps `wmclock`, `wmbattery`, `wmcpuload` and `wmmemload` again
+  and relaunches `xeyes` (also after resuming from suspend). dtwm rebuilds the Front
+  Panel and leaves these dockapps running but unmapped, i.e. empty squares in the
+  panel; the script puts them back within about 10 s. It also keeps the system tray in
+  its corner.
 - `lock-on-sleep.py`: locks the screen with CDE (`lock-cde.sh`, i.e. `dtaction
   LockDisplay`) before every suspend, holding a logind delay inhibitor like
   `xfce4-screensaver` does. CDE predates suspend and doesn't lock by itself then.

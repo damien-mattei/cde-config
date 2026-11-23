@@ -53,6 +53,18 @@ tray_corner() {
     xdotool windowmove "$t" $(( ${r%x*} - WIDTH )) $(( ${r#*x} - HEIGHT ))
     tray_root=$r
 }
+# La zone de notification est mise sur tous les bureaux au lancement (occupyall) :
+# si on ajoute des bureaux ensuite, elle n y est pas. Le Front Panel est present sur
+# tous les bureaux, on compare avec lui et on refait occupyall si besoin.
+tray_workspaces() {
+    t=$(xdotool search --classname '^stalonetray$' 2>/dev/null | head -1)
+    [ -n "$t" ] || return
+    f=$(xwininfo -root -tree 2>/dev/null | awk '/"FrontPanel"/{print $1; exit}')
+    [ -n "$f" ] || return
+    nt=$(xprop -id "$t" _DT_WORKSPACE_PRESENCE 2>/dev/null | tr ',' '\n' | wc -l)
+    nf=$(xprop -id "$f" _DT_WORKSPACE_PRESENCE 2>/dev/null | tr ',' '\n' | wc -l)
+    [ "$nf" -gt "$nt" ] && "$HOME/.dt/bin/occupyall" "$t"
+}
 xeyes_down=0
 last=$(date +%s)
 while xprop -root _NET_SUPPORTED >/dev/null 2>&1 || xdpyinfo >/dev/null 2>&1; do
@@ -64,6 +76,7 @@ while xprop -root _NET_SUPPORTED >/dev/null 2>&1 || xdpyinfo >/dev/null 2>&1; do
     fi
     last=$now
     tray_corner
+    tray_workspaces
     for w in $(xdotool search --name '^wmcpuload$' 2>/dev/null); do
         info=$(xwininfo -id "$w" 2>/dev/null) || continue
         echo "$info" | grep -q 'Width: 1$' && continue    # fenetre de groupe

@@ -57,7 +57,8 @@ screenshot, qps, Psensor, gkrellm…
   and relaunches `xeyes` (also after resuming from suspend). dtwm rebuilds the Front
   Panel and leaves these dockapps running but unmapped, i.e. empty squares in the
   panel; the script puts them back within about 10 s. It also keeps the system tray in
-  its corner.
+  its corner and on every workspace, including ones added later (`occupyall` alone only
+  covers the workspaces that exist when the tray starts).
 - `lock-on-sleep.py`: locks the screen with CDE (`lock-cde.sh`, i.e. `dtaction
   LockDisplay`) before every suspend, holding a logind delay inhibitor like
   `xfce4-screensaver` does. CDE predates suspend and doesn't lock by itself then.

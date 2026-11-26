@@ -5,6 +5,21 @@
 My personal **CDE** (Common Desktop Environment) setup on Ubuntu: the contents of
 `~/.dt`, with a Front Panel brought up to date while staying true to the CDE look.
 
+## Quick start (in a hurry)
+
+CDE must already be installed (`/usr/dt`):
+
+```sh
+git clone https://github.com/damien-mattei/cde-config
+cde-config/install.sh --dry-run   # preview: changes nothing
+cde-config/install.sh
+```
+
+Then right-click the desktop → **Restart Workspace Manager**, and log out and back in.
+The installer saves your current `~/.dt` first, offers to install missing packages and
+only adds the buttons whose program you have. Details: [Installation](#installation).
+Tested on Ubuntu 24.04 only.
+
 ![CDE desktop: Style Manager, dtinfo, HP-15C, the Desktop Style subpanel and the customized Front Panel](doc/cde-desktop.png)
 
 ## What's inside
@@ -71,16 +86,7 @@ screenshot, qps, Psensor, gkrellm…
 
 ## Installation
 
-CDE itself must already be installed (`/usr/dt`). Then:
-
-```sh
-git clone https://github.com/damien-mattei/cde-config
-cde-config/install.sh --dry-run   # shows what it would do, changes nothing
-cde-config/install.sh
-```
-
-Then right-click the desktop → **Restart Workspace Manager**, and log out and back in
-so that `sessionetc` runs.
+See [Quick start](#quick-start-in-a-hurry) for the commands.
 
 What `install.sh` does:
 - lists the missing packages and offers `sudo apt install` (nothing is bundled, the

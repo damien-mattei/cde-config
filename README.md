@@ -71,22 +71,41 @@ screenshot, qps, Psensor, gkrellm…
 
 ## Installation
 
-1. Copy the files into `~/.dt` (back up your own first).
-2. Replace `/home/mattei` with your home directory in the files that contain it:
-   `grep -rl /home/mattei ~/.dt`.
-3. Make CDE the only screen locker (otherwise `xfce4-screensaver` cannot lock a
-   screen CDE has already locked, and the suspend stops on a question):
-   `xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/lock-screen-suspend-hibernate -s false`,
-   `xfconf-query -c xfce4-screensaver -p /lock/sleep-activation -s false`, and
-   `xfconf-query -c xfce4-session -p /general/LockCommand -s $HOME/.dt/lock-cde.sh`
-   (for `xflock4`).
-4. Right-click the desktop → **Restart Workspace Manager**, then log out and back in
-   so that `sessionetc` runs.
+CDE itself must already be installed (`/usr/dt`). Then:
 
-Packages used (Ubuntu): `wmclock wmcpuload wmmemload wmbattery x11-apps
-stalonetray network-manager-gnome blueman xfce4-clipman xfce4-power-manager
-xfce4-screenshooter pavucontrol nautilus xdotool x11-utils libnotify-bin
-papirus-icon-theme`.
+```sh
+git clone https://github.com/damien-mattei/cde-config
+cde-config/install.sh --dry-run   # shows what it would do, changes nothing
+cde-config/install.sh
+```
+
+Then right-click the desktop → **Restart Workspace Manager**, and log out and back in
+so that `sessionetc` runs.
+
+What `install.sh` does:
+- lists the missing packages and offers `sudo apt install` (nothing is bundled, the
+  default answer is no);
+- saves your whole `~/.dt` to `~/.dt.backup-DATE`, then **merges** these files into it
+  (your `dtwmrc` and `sessions/sessionetc` are replaced, with a warning);
+- replaces my home directory with yours in the actions and controls;
+- installs a Front Panel control or subpanel entry **only if its program exists** on
+  your machine;
+- creates the small action files in your home that subpanel entries point to
+  (`~/Power`, `~/Monitors`…), never overwriting an existing file;
+- compiles the C tools into `~/.dt/bin`;
+- asks before changing the three Xfce settings that make CDE the only screen locker.
+
+To go back, move the backup in place of `~/.dt` (the script prints the command).
+
+Tested on Ubuntu 24.04 only. Some choices remain personal: the calendar and mail
+buttons open Google Calendar and Gmail, and dropping a file on the printer prints to
+my HP queue (`types/PrintHP.dt`).
+
+Packages (Ubuntu): `wmclock wmcpuload wmmemload wmbattery x11-apps stalonetray
+network-manager-gnome blueman xfce4-clipman xfce4-power-manager xfconf
+xfce4-screenshooter xfce4-appfinder xfce4-terminal pavucontrol pulseaudio-utils
+pipewire-bin alsa-utils nautilus xdotool x11-utils x11-xserver-utils libnotify-bin
+python3-gi gcc libx11-dev libmotif-dev`.
 
 ## Power saving, screen and lock: who does what
 

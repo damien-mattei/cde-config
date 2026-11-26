@@ -10,6 +10,8 @@ LOW=30
 CRIT=10
 PERIOD=60
 SOUND=/usr/share/sounds/Yaru/stereo/battery-low.oga
+# Son de repli si le theme sonore d Ubuntu n est pas installe
+[ -r "$SOUND" ] || SOUND=/usr/share/sounds/freedesktop/stereo/dialog-warning.oga
 bat=$(ls -d /sys/class/power_supply/BAT* 2>/dev/null | head -1)
 [ -n "$bat" ] || exit 0
 idfile="${XDG_RUNTIME_DIR:-/tmp}/battery-notify.id"

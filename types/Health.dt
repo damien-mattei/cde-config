@@ -1,0 +1,9 @@
+ACTION Health
+{
+     LABEL         System health
+     TYPE          COMMAND
+     EXEC_STRING   /home/mattei/.dt/health-terminal.sh
+     ICON          Health
+     WINDOW_TYPE   NO_STDIO
+     DESCRIPTION   Faut-il redemarrer ? Rapport sur la machine et la session
+}

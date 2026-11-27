@@ -84,6 +84,25 @@ screenshot, qps, Psensor, gkrellm…
 - `xeyes-panel.sh`, `wmmemload-panel.sh`, `tray-panel.sh`, `xclock-toggle.sh`,
   `presentation-toggle.sh`, `dropbox-*.sh`.
 
+## Should I reboot?
+
+**System Health** (Desktop Style subpanel) runs `health.sh` in a terminal. It answers
+with one of four verdicts, lightest first, and gives its reasons. Uptime alone is not
+a criterion.
+
+| Verdict | Based on |
+|---|---|
+| All is well | none of the below |
+| Watch one program | low available memory or heavy swap, memory/IO pressure, a nearly full disk, one program using over 25 % of the RAM |
+| Restart the CDE session | `Xorg`, `dtwm`, `dtsession` or `ttsession` too large or doubled since the session started, too many open files or X clients |
+| Reboot the machine | processes killed for lack of memory, serious kernel errors, processes stuck in state D |
+
+Updates waiting for a reboot (`/var/run/reboot-required`) and Wi-Fi firmware crashes
+are listed separately. To spot leaks, one measurement a day is kept in
+`~/.local/state/cde-health.csv` (recorded by `panel-applets-watch.sh`). The thresholds
+are rules of thumb and can be changed with environment variables (see the top of the
+script). The report is in French.
+
 ## Installation
 
 See [Quick start](#quick-start-in-a-hurry) for the commands.

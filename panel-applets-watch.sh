@@ -66,6 +66,7 @@ tray_workspaces() {
     [ "$nf" -gt "$nt" ] && "$HOME/.dt/bin/occupyall" "$t"
 }
 xeyes_down=0
+health_day=     # jour de la derniere mesure pour health.sh
 last=$(date +%s)
 while xprop -root _NET_SUPPORTED >/dev/null 2>&1 || xdpyinfo >/dev/null 2>&1; do
     # Sortie de veille : l'horloge a fait un bond bien plus grand que la pause de 5 s.
@@ -75,6 +76,9 @@ while xprop -root _NET_SUPPORTED >/dev/null 2>&1 || xdpyinfo >/dev/null 2>&1; do
         xeyes_relaunch
     fi
     last=$now
+    # Une mesure par jour pour l historique de health.sh (detection des fuites)
+    d=$(date +%F)
+    if [ "$d" != "$health_day" ]; then health_day=$d; "$HOME/.dt/health.sh" --record & fi
     tray_corner
     tray_workspaces
     for w in $(xdotool search --name '^wmcpuload$' 2>/dev/null); do

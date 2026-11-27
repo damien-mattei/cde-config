@@ -127,6 +127,7 @@ action_ok() {
         DropboxTerm)      [ -x "$HOME/.dropbox-dist/dropboxd" ] && has xfce4-terminal; return ;;
         PresentationMode) has xfconf-query && has xfce4-power-manager; return ;;
         XClock)           has xclock; return ;;
+        Health)           has xfce4-terminal; return ;;
     esac
     case $prog in
         # pas "flatpak info" : il cree des dossiers dans le home au passage

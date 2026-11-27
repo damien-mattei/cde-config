@@ -7,5 +7,5 @@ CONTROL Dropbox
    ICON			Dropbox
    LABEL		Dropbox
    PUSH_ACTION		DropboxTerm
-   HELP_STRING		Relance Dropbox dans un terminal pour voir ses messages
+   HELP_STRING		Restarts Dropbox in a terminal to see its messages
 }

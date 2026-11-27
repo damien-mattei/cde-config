@@ -5,14 +5,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 int main(int argc, char **argv) {
-    if (argc != 3) { fprintf(stderr, "usage: %s <id fenetre> <couleur>\n", argv[0]); return 2; }
+    if (argc != 3) { fprintf(stderr, "usage: %s <window id> <colour>\n", argv[0]); return 2; }
     Display *d = XOpenDisplay(NULL);
-    if (!d) { fprintf(stderr, "pas d'affichage X\n"); return 1; }
+    if (!d) { fprintf(stderr, "cannot open the X display\n"); return 1; }
     Window w = strtoul(argv[1], NULL, 0);
     XColor c;
     if (!XParseColor(d, DefaultColormap(d, DefaultScreen(d)), argv[2], &c) ||
         !XAllocColor(d, DefaultColormap(d, DefaultScreen(d)), &c)) {
-        fprintf(stderr, "couleur inconnue : %s\n", argv[2]); return 1;
+        fprintf(stderr, "unknown colour: %s\n", argv[2]); return 1;
     }
     XSetWindowBackground(d, w, c.pixel);
     XClearArea(d, w, 0, 0, 0, 0, True);   /* repeint le fond et demande un redessin */

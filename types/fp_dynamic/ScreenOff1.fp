@@ -7,5 +7,5 @@ CONTROL ScreenOff
    ICON			ScreenOff
    LABEL		Screen Off
    PUSH_ACTION		ScreenOff
-   HELP_STRING		Eteint l ecran ; une touche ou la souris le rallume
+   HELP_STRING		Turns the screen off; a key or the mouse turns it back on
 }

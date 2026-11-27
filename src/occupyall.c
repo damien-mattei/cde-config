@@ -13,9 +13,9 @@
 #include <stdlib.h>
 
 int main(int argc, char **argv) {
-    if (argc != 2) { fprintf(stderr, "usage: %s <id fenetre>\n", argv[0]); return 2; }
+    if (argc != 2) { fprintf(stderr, "usage: %s <window id>\n", argv[0]); return 2; }
     Display *d = XOpenDisplay(NULL);
-    if (!d) { fprintf(stderr, "occupyall : pas d'affichage X\n"); return 1; }
+    if (!d) { fprintf(stderr, "occupyall: cannot open the X display\n"); return 1; }
     Window w = strtoul(argv[1], NULL, 0);
     DtWsmOccupyAllWorkspaces(d, w);
     XSync(d, False);

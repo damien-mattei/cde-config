@@ -7,5 +7,5 @@ CONTROL Screenshot
    ICON			Screenshot
    LABEL		Screenshot
    PUSH_ACTION		Screenshot
-   HELP_STRING		Capture d ecran (xfce4-screenshooter)
+   HELP_STRING		Screenshot (xfce4-screenshooter)
 }

@@ -29,6 +29,6 @@ ACTION Power_settings
      EXEC_STRING   /usr/bin/xfce4-power-manager-settings
      ICON          Power settings
      WINDOW_TYPE   NO_STDIO
-     DESCRIPTION   Réglages d'alimentation
+     DESCRIPTION   Power settings
 }
 

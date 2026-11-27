@@ -1,5 +1,5 @@
 #!/usr/bin/python3 -I
-# Affiche l'etat de Dropbox (ex. "A jour", "Synchronisation de 3 fichiers...")
+# Affiche l'etat de Dropbox (texte fourni par Dropbox, dans sa langue)
 # en interrogeant le Dropbox qui tourne par ~/.dropbox/command_socket.
 import os, socket, sys
 try:
@@ -14,8 +14,8 @@ try:
             break
         data += chunk
 except OSError:
-    print("Dropbox ne repond pas")
+    print("Dropbox is not responding")
     sys.exit(1)
 lines = data.decode(errors="replace").splitlines()
 status = [l.split("\t", 1)[1] for l in lines if l.startswith("status\t")]
-print(" / ".join(status) or "Etat inconnu")
+print(" / ".join(status) or "Unknown status")

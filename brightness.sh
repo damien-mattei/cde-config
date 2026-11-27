@@ -23,4 +23,4 @@ idf="${XDG_RUNTIME_DIR:-/tmp}/brightness-notify.id"
 id=$(cat "$idf" 2>/dev/null)
 bar=$level; [ "$level" -eq 0 ] && bar=     # une barre a 0 garde un bout rempli
 notify-send -t 1500 -p ${id:+-r "$id"} -i display-brightness ${bar:+-h int:value:$bar} \
-    "Luminosité $level %" >"$idf.new" 2>/dev/null && mv "$idf.new" "$idf"
+    "Brightness $level %" >"$idf.new" 2>/dev/null && mv "$idf.new" "$idf"

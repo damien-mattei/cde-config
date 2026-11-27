@@ -51,7 +51,7 @@ static int supports_delete(Display *d, Window w) {
 
 int main(void) {
     Display *d = XOpenDisplay(NULL);
-    if (!d) { fprintf(stderr, "closewin : pas d'affichage X\n"); return 1; }
+    if (!d) { fprintf(stderr, "closewin: cannot open the X display\n"); return 1; }
     Window root = DefaultRootWindow(d);
     WM_STATE = XInternAtom(d, "WM_STATE", False);
     WM_PROTOCOLS = XInternAtom(d, "WM_PROTOCOLS", False);
@@ -60,7 +60,7 @@ int main(void) {
     Cursor cross = XCreateFontCursor(d, XC_crosshair);
     if (XGrabPointer(d, root, False, ButtonPressMask, GrabModeAsync, GrabModeAsync,
                      root, cross, CurrentTime) != GrabSuccess) {
-        fprintf(stderr, "closewin : souris deja prise par un autre programme\n"); return 1;
+        fprintf(stderr, "closewin: the pointer is grabbed by another program\n"); return 1;
     }
     XGrabKeyboard(d, root, False, GrabModeAsync, GrabModeAsync, CurrentTime);
 
@@ -92,7 +92,7 @@ int main(void) {
     }
 
     if (!supports_delete(d, w)) {
-        fprintf(stderr, "closewin : cette fenetre ne sait pas se fermer ainsi, rien n'est fait\n");
+        fprintf(stderr, "closewin: this window cannot be closed this way, nothing done\n");
         XCloseDisplay(d); return 2;
     }
     XEvent msg; memset(&msg, 0, sizeof msg);

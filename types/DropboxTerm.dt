@@ -5,5 +5,5 @@ ACTION DropboxTerm
      EXEC_STRING   /home/mattei/.dt/dropbox-terminal.sh
      ICON          Dropbox
      WINDOW_TYPE   NO_STDIO
-     DESCRIPTION   Relance Dropbox dans un terminal pour voir ses messages
+     DESCRIPTION   Restarts Dropbox in a terminal to see its messages
 }

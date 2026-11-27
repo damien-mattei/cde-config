@@ -31,7 +31,7 @@ while :; do
         # Une seule bulle, remplacee a chaque minute au lieu de s empiler
         id=$(cat "$idfile" 2>/dev/null)
         notify-send -p ${id:+-r "$id"} -u "$urg" -i battery-caution \
-            "Batterie faible : $cap %" "Branche le chargeur." >"$idfile" 2>/dev/null
+            "Low battery: $cap %" "Plug in the charger." >"$idfile" 2>/dev/null
     fi
     sleep "$PERIOD"
 done

@@ -7,5 +7,5 @@ CONTROL PresentationMode
    ICON			DtScrn
    LABEL		Presentation Mode
    PUSH_ACTION		PresentationMode
-   HELP_STRING		Active ou desactive le mode presentation
+   HELP_STRING		Turns presentation mode on or off
 }

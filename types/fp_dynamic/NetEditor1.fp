@@ -7,5 +7,5 @@ CONTROL NetEditor
    ICON			NetEditor
    LABEL		Network Connections
    PUSH_ACTION		NetEditor
-   HELP_STRING		Editeur des connexions reseau (NetworkManager)
+   HELP_STRING		Network connection editor (NetworkManager)
 }

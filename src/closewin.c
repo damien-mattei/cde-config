@@ -15,6 +15,15 @@
 #include <X11/cursorfont.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+
+/* Message en francais si le systeme est en francais, en anglais sinon. */
+static const char *tr_(const char *fr, const char *en) {
+    const char *l = getenv("LC_ALL");
+    if (!l || !*l) l = getenv("LC_MESSAGES");
+    if (!l || !*l) l = getenv("LANG");
+    return l && strncmp(l, "fr", 2) == 0 ? fr : en;
+}
 
 static Atom WM_STATE, WM_PROTOCOLS, WM_DELETE_WINDOW;
 
@@ -51,7 +60,7 @@ static int supports_delete(Display *d, Window w) {
 
 int main(void) {
     Display *d = XOpenDisplay(NULL);
-    if (!d) { fprintf(stderr, "closewin: cannot open the X display\n"); return 1; }
+    if (!d) { fputs(tr_("closewin : pas d'affichage X\n", "closewin: cannot open the X display\n"), stderr); return 1; }
     Window root = DefaultRootWindow(d);
     WM_STATE = XInternAtom(d, "WM_STATE", False);
     WM_PROTOCOLS = XInternAtom(d, "WM_PROTOCOLS", False);
@@ -60,7 +69,7 @@ int main(void) {
     Cursor cross = XCreateFontCursor(d, XC_crosshair);
     if (XGrabPointer(d, root, False, ButtonPressMask, GrabModeAsync, GrabModeAsync,
                      root, cross, CurrentTime) != GrabSuccess) {
-        fprintf(stderr, "closewin: the pointer is grabbed by another program\n"); return 1;
+        fputs(tr_("closewin : souris deja prise par un autre programme\n", "closewin: the pointer is grabbed by another program\n"), stderr); return 1;
     }
     XGrabKeyboard(d, root, False, GrabModeAsync, GrabModeAsync, CurrentTime);
 
@@ -92,7 +101,7 @@ int main(void) {
     }
 
     if (!supports_delete(d, w)) {
-        fprintf(stderr, "closewin: this window cannot be closed this way, nothing done\n");
+        fputs(tr_("closewin : cette fenetre ne sait pas se fermer ainsi, rien n'est fait\n", "closewin: this window cannot be closed this way, nothing done\n"), stderr);
         XCloseDisplay(d); return 2;
     }
     XEvent msg; memset(&msg, 0, sizeof msg);

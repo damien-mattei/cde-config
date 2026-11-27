@@ -11,11 +11,20 @@
 #include <Dt/Wsm.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+/* Message en francais si le systeme est en francais, en anglais sinon. */
+static const char *tr_(const char *fr, const char *en) {
+    const char *l = getenv("LC_ALL");
+    if (!l || !*l) l = getenv("LC_MESSAGES");
+    if (!l || !*l) l = getenv("LANG");
+    return l && strncmp(l, "fr", 2) == 0 ? fr : en;
+}
 
 int main(int argc, char **argv) {
-    if (argc != 2) { fprintf(stderr, "usage: %s <window id>\n", argv[0]); return 2; }
+    if (argc != 2) { fprintf(stderr, tr_("usage: %s <id fenetre>\n", "usage: %s <window id>\n"), argv[0]); return 2; }
     Display *d = XOpenDisplay(NULL);
-    if (!d) { fprintf(stderr, "occupyall: cannot open the X display\n"); return 1; }
+    if (!d) { fputs(tr_("occupyall : pas d'affichage X\n", "occupyall: cannot open the X display\n"), stderr); return 1; }
     Window w = strtoul(argv[1], NULL, 0);
     DtWsmOccupyAllWorkspaces(d, w);
     XSync(d, False);

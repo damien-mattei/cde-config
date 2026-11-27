@@ -7,6 +7,7 @@
 #   Au niveau 0, le retroeclairage est eteint (ecran noir) : la touche de
 #   luminosite + le rallume.
 # Premier retroeclairage trouve (intel_backlight ici, amdgpu_bl0 ailleurs...)
+. "$HOME/.dt/lang.sh"
 for dev in /sys/class/backlight/*; do break; done
 [ -r "$dev/max_brightness" ] || exit 0
 max=$(cat $dev/max_brightness); cur=$(cat $dev/brightness)
@@ -23,4 +24,4 @@ idf="${XDG_RUNTIME_DIR:-/tmp}/brightness-notify.id"
 id=$(cat "$idf" 2>/dev/null)
 bar=$level; [ "$level" -eq 0 ] && bar=     # une barre a 0 garde un bout rempli
 notify-send -t 1500 -p ${id:+-r "$id"} -i display-brightness ${bar:+-h int:value:$bar} \
-    "Brightness $level %" >"$idf.new" 2>/dev/null && mv "$idf.new" "$idf"
+    "$(msg "Luminosité $level %" "Brightness $level %")" >"$idf.new" 2>/dev/null && mv "$idf.new" "$idf"

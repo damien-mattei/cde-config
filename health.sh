@@ -8,6 +8,7 @@
 #                              (appele par panel-applets-watch.sh)
 # Les seuils sont des regles d experience ; ils se changent par variables
 # d environnement (utile aussi pour les essais).
+. "$HOME/.dt/lang.sh"
 
 : "${HEALTH_REBOOT_FILE:=/var/run/reboot-required}"
 : "${HEALTH_DIR:=${XDG_STATE_HOME:-$HOME/.local/state}}"
@@ -24,6 +25,7 @@
 : "${XCLIENTS_MAX:=200}"    # le serveur X en accepte 256 par defaut
 HISTORY="$HEALTH_DIR/cde-health.csv"
 export LC_NUMERIC=C
+MB=$(msg Mo MB)
 
 # --- Mesures ---------------------------------------------------------------
 meminfo() { awk -v k="$1:" '$1==k{print int($2/1024)}' /proc/meminfo; }
@@ -69,37 +71,37 @@ over() { awk -v a="$1" -v b="$2" 'BEGIN{exit !(a > b)}'; }
 klog=$(journalctl -k -b --no-pager -o cat 2>/dev/null)
 count() { printf '%s\n' "$klog" | grep -ciE "$1"; }
 oom=$(count 'out of memory: killed')
-[ "$oom" -gt 0 ] && reason_machine "$oom process(es) killed for lack of memory since boot"
+[ "$oom" -gt 0 ] && reason_machine "$(msg "$oom processus tué(s) faute de mémoire depuis le démarrage" "$oom process(es) killed for lack of memory since boot")"
 serious=$(count 'kernel BUG at|Oops:|I/O error|GPU HANG|nvme.*(I/O.*timeout|controller is down)|soft lockup|hard LOCKUP')
-[ "$serious" -gt 0 ] && reason_machine "$serious serious kernel error(s) (journalctl -k -b -p err)"
+[ "$serious" -gt 0 ] && reason_machine "$(msg "$serious erreur(s) sérieuse(s) du noyau (journalctl -k -b -p err)" "$serious serious kernel error(s) (journalctl -k -b -p err)")"
 wifi=$(count 'Start IWL Error Log Dump')
 d1=$(ps -eo pid=,stat= | awk '$2 ~ /^D/{print $1}'); sleep 3
 d2=$(ps -eo pid=,stat= | awk '$2 ~ /^D/{print $1}')
 stuck=$(comm -12 <(sort <<<"$d1") <(sort <<<"$d2") | grep -c .)
-[ "$stuck" -gt 0 ] && reason_machine "$stuck process(es) stuck (D state)"
+[ "$stuck" -gt 0 ] && reason_machine "$(msg "$stuck processus bloqué(s) (état D)" "$stuck process(es) stuck (D state)")"
 for r in memory io; do
     v=$(awk '$1=="some"{split($4,a,"="); print a[2]}' /proc/pressure/$r 2>/dev/null)
-    over "${v:-0}" "$PSI_MAX" && reason_program "waiting on $([ $r = io ] && echo disk I/O || echo memory) $v % of the time"
+    over "${v:-0}" "$PSI_MAX" && reason_program "$(msg "attente $([ $r = io ] && echo disque || echo mémoire) : $v % du temps" "waiting on $([ $r = io ] && echo disk I/O || echo memory) $v % of the time")"
 done
 mem_pct=$((mem_avail * 100 / mem_total))
-[ "$mem_pct" -lt "$MEM_MIN_PCT" ] && reason_program "only $mem_pct % of memory available"
+[ "$mem_pct" -lt "$MEM_MIN_PCT" ] && reason_program "$(msg "mémoire disponible : $mem_pct % seulement" "only $mem_pct % of memory available")"
 swap_pct=0; [ "$swap_total" -gt 0 ] && swap_pct=$((swap_used * 100 / swap_total))
-[ "$swap_pct" -gt "$SWAP_MAX_PCT" ] && reason_program "swap $swap_pct % used"
+[ "$swap_pct" -gt "$SWAP_MAX_PCT" ] && reason_program "$(msg "swap utilisé à $swap_pct %" "swap $swap_pct % used")"
 disks=$(df -P / "$HOME" /tmp 2>/dev/null | awk 'NR>1 && !seen[$6]++{sub(/%/,"",$5); print $5, $6}')
 while read -r pct mnt; do
-    [ "$pct" -gt "$DISK_MAX_PCT" ] && reason_program "disk $mnt is $pct % full (free some space)"
+    [ "$pct" -gt "$DISK_MAX_PCT" ] && reason_program "$(msg "disque $mnt plein à $pct % (faire de la place)" "disk $mnt is $pct % full (free some space)")"
 done <<<"$disks"
 
 # Session CDE
 too_big() {  # $1 = nom, $2 = Mo, $3 = seuil
-    [ -n "$2" ] && [ "$2" -gt "$3" ] && reason_session "$1 uses $2 MB (threshold $3)"
+    [ -n "$2" ] && [ "$2" -gt "$3" ] && reason_session "$(msg "$1 occupe $2 Mo (seuil $3)" "$1 uses $2 MB (threshold $3)")"
 }
 too_big Xorg "$rss_xorg" "$XORG_MAX_MB"
 too_big dtwm "$rss_dtwm" "$DTWM_MAX_MB"
 too_big dtsession "$rss_dtsession" "$DTSESSION_MAX_MB"
 too_big ttsession "$rss_ttsession" "$TTSESSION_MAX_MB"
-[ -n "$fd_xorg" ] && [ "$fd_xorg" -gt "$FD_MAX" ] && reason_session "Xorg has $fd_xorg open files"
-[ "$xclients" -gt "$XCLIENTS_MAX" ] && reason_session "$xclients X clients (limit 256)"
+[ -n "$fd_xorg" ] && [ "$fd_xorg" -gt "$FD_MAX" ] && reason_session "$(msg "Xorg a $fd_xorg fichiers ouverts" "Xorg has $fd_xorg open files")"
+[ "$xclients" -gt "$XCLIENTS_MAX" ] && reason_session "$(msg "$xclients clients X (limite 256)" "$xclients X clients (limit 256)")"
 
 # Fuites : comparaison avec la premiere mesure de cette session
 first=$(grep -m1 ",$session," "$HISTORY" 2>/dev/null)
@@ -108,8 +110,8 @@ if [ -n "$first" ]; then
     IFS=, read -r f_date _ _ _ _ f_xorg f_dtwm f_dtsession f_ttsession _ _ <<<"$first"
     grown() {  # double et +50 Mo depuis la premiere mesure
         [ -n "$2" ] && [ -n "$3" ] && [ "$2" -gt $((2 * $3)) ] && [ $(($2 - $3)) -gt 50 ] &&
-            reason_session "$1 grew from $3 to $2 MB since $f_date (leak?)"
-        [ -n "$3" ] && growth+=("$1 $3 -> $2 MB")
+            reason_session "$(msg "$1 a grossi de $3 à $2 Mo depuis le $f_date (fuite ?)" "$1 grew from $3 to $2 MB since $f_date (leak?)")"
+        [ -n "$3" ] && growth+=("$1 $3 -> $2 $MB")
     }
     if [ "$f_date" != "$today" ]; then
         grown Xorg "$rss_xorg" "$f_xorg"
@@ -125,42 +127,42 @@ top=$(ps -eo rss=,comm= | awk '{r=$1; $1=""; sub(/^ /,""); sum[$0]+=r}
     END{for (n in sum) printf "%d\t%s\n", sum[n]/1024, n}' | sort -rn | head -4)
 while IFS=$'\t' read -r mb name; do
     [ $((mb * 100 / mem_total)) -gt "$BIG_PCT" ] &&
-        reason_program "$name uses $((mb * 100 / mem_total)) % of memory: restart it"
+        reason_program "$(msg "$name occupe $((mb * 100 / mem_total)) % de la mémoire : le relancer" "$name uses $((mb * 100 / mem_total)) % of memory: restart it")"
 done <<<"$top"
 
 # --- Rapport -----------------------------------------------------------------
 if [ -t 1 ]; then B=$'\e[1m' G=$'\e[32m' Y=$'\e[33m' R=$'\e[31m' N=$'\e[0m'; else B= G= Y= R= N=; fi
 list() { local x; for x in "$@"; do printf '  - %s\n' "$x"; done; }
 
-echo "${B}System health${N}  (up $up_days day(s))"
+echo "${B}$(msg "État du système" "System health")${N}  ($(msg "allumé depuis $up_days jour(s)" "up $up_days day(s)"))"
 echo
 case $level in
-    0) echo "${G}${B}ALL IS WELL${N}: nothing to restart." ;;
-    1) echo "${Y}${B}WATCH ONE PROGRAM${N}: no need to reboot." ;;
-    2) echo "${Y}${B}RESTART THE CDE SESSION${N} (try Restart Workspace Manager first)." ;;
-    3) echo "${R}${B}REBOOT THE MACHINE${N} is advised." ;;
+    0) echo "${G}${B}$(msg "TOUT VA BIEN" "ALL IS WELL")${N}$(msg " : rien à relancer." ": nothing to restart.")" ;;
+    1) echo "${Y}${B}$(msg "UN PROGRAMME à surveiller" "WATCH ONE PROGRAM")${N}$(msg " : inutile de redémarrer." ": no need to reboot.")" ;;
+    2) echo "${Y}${B}$(msg "RELANCER LA SESSION CDE" "RESTART THE CDE SESSION")${N} $(msg "(essayer d'abord Restart Workspace Manager)." "(try Restart Workspace Manager first).")" ;;
+    3) echo "${R}${B}$(msg "REDÉMARRER LA MACHINE" "REBOOT THE MACHINE")${N} $(msg "est conseillé." "is advised.")" ;;
 esac
-[ ${#machine[@]} -gt 0 ] && { echo; echo "Machine:"; list "${machine[@]}"; }
-[ ${#sess[@]} -gt 0 ]    && { echo; echo "Session:"; list "${sess[@]}"; }
-[ ${#prog[@]} -gt 0 ]    && { echo; echo "Programs and resources:"; list "${prog[@]}"; }
+[ ${#machine[@]} -gt 0 ] && { echo; echo "$(msg "Machine :" "Machine:")"; list "${machine[@]}"; }
+[ ${#sess[@]} -gt 0 ]    && { echo; echo "$(msg "Session :" "Session:")"; list "${sess[@]}"; }
+[ ${#prog[@]} -gt 0 ]    && { echo; echo "$(msg "Programmes et ressources :" "Programs and resources:")"; list "${prog[@]}"; }
 
 if [ -f "$HEALTH_REBOOT_FILE" ]; then
     pkgs=$(sort -u "$HEALTH_REBOOT_FILE.pkgs" 2>/dev/null | paste -sd' ')
     echo
-    echo "${Y}Updates waiting for a reboot${N} (security, not urgent):"
-    echo "  ${pkgs:-see $HEALTH_REBOOT_FILE}"
+    echo "${Y}$(msg "Mises à jour en attente d'un redémarrage" "Updates waiting for a reboot")${N} $(msg "(sécurité, pas d'urgence) :" "(security, not urgent):")"
+    echo "  ${pkgs:-$(msg "voir" "see") $HEALTH_REBOOT_FILE}"
 fi
-[ "$wifi" -gt 0 ] && { echo; echo "Note: $wifi Wi-Fi firmware crash(es) (iwlwifi) since boot."; }
+[ "$wifi" -gt 0 ] && { echo; echo "$(msg "À noter : $wifi plantage(s) du Wi-Fi (iwlwifi) depuis le démarrage." "Note: $wifi Wi-Fi firmware crash(es) (iwlwifi) since boot.")"; }
 
 echo
-echo "${B}Measurements${N}"
-echo "  available memory: $mem_avail MB of $mem_total ($mem_pct %), swap: $swap_used MB ($swap_pct %)"
-echo "  disks: $(awk '{printf "%s %s%%  ", $2, $1}' <<<"$disks")"
-echo "  CDE: Xorg ${rss_xorg:-?} MB, dtwm ${rss_dtwm:-?}, dtsession ${rss_dtsession:-?}, ttsession ${rss_ttsession:-?}; $xclients X clients"
+echo "${B}$(msg "Mesures" "Measurements")${N}"
+echo "  $(msg "mémoire disponible : $mem_avail Mo sur $mem_total" "available memory: $mem_avail MB of $mem_total") ($mem_pct %), swap$(msg " " ""): $swap_used $MB ($swap_pct %)"
+echo "  $(msg "disques :" "disks:") $(awk '{printf "%s %s%%  ", $2, $1}' <<<"$disks")"
+echo "  CDE$(msg " " ""): Xorg ${rss_xorg:-?} $MB, dtwm ${rss_dtwm:-?}, dtsession ${rss_dtsession:-?}, ttsession ${rss_ttsession:-?}; $(msg "$xclients clients X" "$xclients X clients")"
 if [ ${#growth[@]} -gt 0 ]; then
-    echo "  since $f_date: $(printf '%s; ' "${growth[@]}")"
+    echo "  $(msg "depuis le $f_date :" "since $f_date:") $(printf '%s; ' "${growth[@]}")"
 else
-    echo "  history: no older measurement for this session yet"
+    echo "$(msg "  historique : pas encore de mesure plus ancienne pour cette session" "  history: no older measurement for this session yet")"
 fi
-echo "  largest programs:"
-awk -F'\t' '{printf "    %6d MB  %s\n", $1, $2}' <<<"$top"
+echo "$(msg "  plus gros programmes :" "  largest programs:")"
+awk -F'\t' -v u="$MB" '{printf "    %6d %s  %s\n", $1, u, $2}' <<<"$top"

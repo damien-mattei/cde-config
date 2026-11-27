@@ -235,6 +235,10 @@ app hold the suspend back for up to `InhibitDelayMaxSec` (30 s on Ubuntu).
 ## Notes
 
 Comments in the scripts and commit messages are in French.
+Messages shown to the user (notifications, health report, Dropbox terminal, tool
+errors) are in French on a French system and in English otherwise (`lang.sh`; force one
+with `DT_LANG=fr` or `DT_LANG=en`). The static tooltips of the Front Panel are in
+English.
 
 ## Credits
 

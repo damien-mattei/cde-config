@@ -5,6 +5,7 @@
 # le secteur est branche.
 # (wmbattery -a ne marche plus : il ecrit dans /dev/audio, qui n existe plus.)
 # Lance par sessions/sessionetc.
+. "$HOME/.dt/lang.sh"
 
 LOW=30
 CRIT=10
@@ -31,7 +32,7 @@ while :; do
         # Une seule bulle, remplacee a chaque minute au lieu de s empiler
         id=$(cat "$idfile" 2>/dev/null)
         notify-send -p ${id:+-r "$id"} -u "$urg" -i battery-caution \
-            "Low battery: $cap %" "Plug in the charger." >"$idfile" 2>/dev/null
+            "$(msg "Batterie faible : $cap %" "Low battery: $cap %")" "$(msg "Branche le chargeur." "Plug in the charger.")" >"$idfile" 2>/dev/null
     fi
     sleep "$PERIOD"
 done

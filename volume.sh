@@ -2,6 +2,7 @@
 # Touches de volume (liees dans ~/.dt/dtwmrc) : up | down | mute | micmute.
 # Volume limite a 120 % (au-dela, les haut-parleurs saturent), avec une
 # notification qui montre le niveau.
+. "$HOME/.dt/lang.sh"
 sink=@DEFAULT_SINK@
 # Une seule bulle de notification, remplacee a chaque appui (son identifiant
 # est garde ici) au lieu d'en empiler une par appui.
@@ -24,9 +25,9 @@ case "$1" in
     mute)    pactl set-sink-mute $sink toggle ;;
     micmute) pactl set-source-mute @DEFAULT_SOURCE@ toggle
              if pactl get-source-mute @DEFAULT_SOURCE@ | grep -q 'oui\|yes'; then
-                 t="Microphone muted"; i=microphone-sensitivity-muted
+                 t=$(msg "Micro coupé" "Microphone muted"); i=microphone-sensitivity-muted
              else
-                 t="Microphone on"; i=microphone-sensitivity-high
+                 t=$(msg "Micro actif" "Microphone on"); i=microphone-sensitivity-high
              fi
              notify $i "$t"
              exit 0 ;;
@@ -34,7 +35,7 @@ case "$1" in
 esac
 v=$(pactl get-sink-volume $sink | sed -n 's/.* \([0-9]*\)% .*/\1/p' | head -1)
 if pactl get-sink-mute $sink | grep -q 'oui\|yes'; then
-    notify audio-volume-muted "Sound muted"    # sans barre (voir plus bas)
+    notify audio-volume-muted "$(msg "Son coupé" "Sound muted")"    # sans barre (voir plus bas)
 else
     if [ "$v" -eq 0 ]; then i=audio-volume-muted
     elif [ "$v" -lt 34 ]; then i=audio-volume-low
@@ -46,7 +47,7 @@ else
     # a 0 %, on montre seulement le texte.
     b=$((v * 100 / 153)); [ $b -gt 100 ] && b=100; [ $b -eq 0 ] && b=
     if [ "$v" -gt 100 ]; then
-        notify $i "Volume $v % (boosted)" $b
+        notify $i "$(msg "Volume $v % (amplifié)" "Volume $v % (boosted)")" $b
     else
         notify $i "Volume $v %" "$b"
     fi

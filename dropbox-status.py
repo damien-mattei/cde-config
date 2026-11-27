@@ -2,6 +2,9 @@
 # Affiche l'etat de Dropbox (texte fourni par Dropbox, dans sa langue)
 # en interrogeant le Dropbox qui tourne par ~/.dropbox/command_socket.
 import os, socket, sys
+lang = os.environ.get("DT_LANG") or os.environ.get("LC_ALL") or os.environ.get("LC_MESSAGES") or os.environ.get("LANG") or ""
+def msg(fr, en):
+    return fr if lang.startswith("fr") else en
 try:
     s = socket.socket(socket.AF_UNIX)
     s.settimeout(5)
@@ -14,8 +17,8 @@ try:
             break
         data += chunk
 except OSError:
-    print("Dropbox is not responding")
+    print(msg("Dropbox ne répond pas", "Dropbox is not responding"))
     sys.exit(1)
 lines = data.decode(errors="replace").splitlines()
 status = [l.split("\t", 1)[1] for l in lines if l.startswith("status\t")]
-print(" / ".join(status) or "Unknown status")
+print(" / ".join(status) or msg("État inconnu", "Unknown status"))

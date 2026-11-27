@@ -7,5 +7,5 @@ CONTROL Health
    ICON			Health
    LABEL		System Health
    PUSH_ACTION		Health
-   HELP_STRING		Faut-il redemarrer ? Etat de la machine et de la session
+   HELP_STRING		Should I reboot? Health of the machine and the CDE session
 }

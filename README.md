@@ -101,7 +101,7 @@ Updates waiting for a reboot (`/var/run/reboot-required`) and Wi-Fi firmware cra
 are listed separately. To spot leaks, one measurement a day is kept in
 `~/.local/state/cde-health.csv` (recorded by `panel-applets-watch.sh`). The thresholds
 are rules of thumb and can be changed with environment variables (see the top of the
-script). The report is in French.
+script).
 
 ## Installation
 

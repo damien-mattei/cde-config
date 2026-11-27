@@ -5,5 +5,5 @@ ACTION Health
      EXEC_STRING   /home/mattei/.dt/health-terminal.sh
      ICON          Health
      WINDOW_TYPE   NO_STDIO
-     DESCRIPTION   Faut-il redemarrer ? Rapport sur la machine et la session
+     DESCRIPTION   Should I reboot? Report on the machine and the CDE session
 }
